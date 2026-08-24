@@ -130,5 +130,14 @@ const DATA = [
       { label: "", address: "1 Nguyễn Trung Trực, P. Bến Thành", hours: "06:00–20:30", phone: "0909 139 017" }
     ],
     note: "Bún thịt nướng lâu năm nổi tiếng, chả giò giòn. Ngồi ghế nhựa bên lề đường đối diện quán. Giá khoảng 190k/2 phần, gần trung tâm."
+  },
+  {
+    name: "Coconino Phan Văn Trị",
+    category: "Bingsu",
+    badge: "badge-bingsu",
+    branches: [
+      { label: "", address: "127 Phan Văn Trị, P. Chợ Quán", hours: "13:00–22:00", phone: "0899 505 565" }
+    ],
+    note: "Bingsu kiểu Hàn, có phô mai sốt và bánh flan ăn kèm. Quán khá nóng vì không có máy lạnh, tầng 2 hơi cũ. Trà sữa nhài kem cheese được khen ngon."
   }
 ];
