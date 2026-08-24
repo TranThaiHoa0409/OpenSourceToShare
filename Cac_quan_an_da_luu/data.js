@@ -14,7 +14,7 @@
 //       hours: "Giờ mở cửa",
 //       phone: "Số điện thoại (có thể để trống \"\")" }
 //   ],
-//   note: "Ghi chú sau khi ăn / nhận xét"
+//   note: "Ghi chú về quán, món ăn nổi bật, giá cả, không gian..."
 // }
 // ============================================================
 
