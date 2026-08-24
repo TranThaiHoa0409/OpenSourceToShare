@@ -48,7 +48,7 @@ const DATA = [
       { label: "Tân Bình", address: "28 Trương Công Định, P.14, Quận Tân Bình", hours: "10:30–22:00", phone: "" },
       { label: "Gò Vấp", address: "699 Phan Văn Trị, P.1, Quận Gò Vấp", hours: "10:30–22:00", phone: "0938 115 428" }
     ],
-    note: "Ấn tượng nhất là gà sốt mù tạt mật ong — vị lạ, ít quán khác có. Sẽ quay lại vì món này."
+    note: "Chuỗi quán gà rán/gà phô mai kiểu Hàn Quốc, nổi bật với món gà phô mai \"signature\", ngoài ra có mì lạnh, mì tương đen, gà sốt cay, khoai tây lắc phô mai. Giá trung bình khoảng 120.000 – 150.000đ/người."
   },
   {
     name: "Cơm gà xối mỡ Thanh",

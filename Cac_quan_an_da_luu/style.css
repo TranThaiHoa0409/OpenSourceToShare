@@ -4,8 +4,8 @@
    ============================================================ */
 
 :root{
-  --paper: #E9DFC3;       /* nền trang — đậm hơn 1 chút để tách với thẻ */
-  --paper-card: #FFFDF8;  /* nền bảng/thẻ — gần trắng để nổi bật */
+  --paper: #E9DFC3;       /* nền trang */
+  --paper-card: #F6EFD6;  /* nền thẻ/bảng — vàng kem, khác tông với nền trang nhưng không phải trắng */
   --ink: #1C2B45;
   --ink-soft: #4A5568;
   --lacquer: #A11D2E;
@@ -171,8 +171,8 @@ h1{
 }
 .note-text{
   display:-webkit-box;
-  -webkit-line-clamp:3;
-  line-clamp:3;
+  -webkit-line-clamp:1;
+  line-clamp:1;
   -webkit-box-orient:vertical;
   overflow:hidden;
 }
@@ -210,13 +210,14 @@ footer{ color:var(--ink-soft); }
 @media (max-width: 700px){
   .ledger table thead{ display:none; }
 
-  /* Bỏ khung/viền của .ledger gốc — mỗi hàng giờ tự là 1 thẻ riêng,
-     nếu giữ khung ngoài sẽ bị lồng "thẻ trong thẻ" */
+  /* Khung ngoài bao quanh cả danh sách — viền đậm & rõ để phân tách
+     với nền trang, khác với viền mảnh của từng thẻ quán bên trong */
   .ledger{
-    background:transparent;
-    border:none;
-    border-radius:0;
+    background:var(--paper);
+    border:1.5px solid rgba(28,43,69,0.35);
+    border-radius:14px;
     box-shadow:none;
+    padding:14px;
   }
 
   .ledger table,
@@ -232,14 +233,17 @@ footer{ color:var(--ink-soft); }
     border:1px solid var(--line);
     border-radius:10px;
     margin:0 0 12px;
-    padding:12px 14px;
+    padding:16px 18px;
     box-shadow:0 2px 8px rgba(28,43,69,0.06);
   }
   .ledger tbody tr:hover{ background-color:var(--paper-card); }
 
+  /* Bootstrap tô nền riêng cho từng ô (--bs-table-bg), làm lộ màu nền
+     trang phía sau; ép lại nền ô trùng màu thẻ để không bị "thủng" */
   .ledger td{
+    background-color:var(--paper-card) !important;
     border:none !important;
-    padding:6px 0;
+    padding:8px 0;
   }
 
   /* Tên quán + loại quán gộp làm "tiêu đề thẻ", gọn hơn */
