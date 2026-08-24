@@ -139,5 +139,14 @@ const DATA = [
       { label: "", address: "127 Phan Văn Trị, P. Chợ Quán", hours: "13:00–22:00", phone: "0899 505 565" }
     ],
     note: "Bingsu kiểu Hàn, có phô mai sốt và bánh flan ăn kèm. Quán khá nóng vì không có máy lạnh, tầng 2 hơi cũ. Trà sữa nhài kem cheese được khen ngon."
+  },
+  {
+    name: "Chè Tang Chao 華人甜品店",
+    category: "Chè",
+    badge: "badge-che",
+    branches: [
+      { label: "", address: "249a Lê Hồng Phong, P. Chợ Quán", hours: "12:30–22:30", phone: "0838 312 168" }
+    ],
+    note: "Chè kiểu Hoa, món nổi bật là chè mè đen & đậu phộng bày hình âm dương, vị béo thơm không quá ngọt. Quán 2 tầng, có máy lạnh, hợp nhóm đông. Một số món dễ hết sớm, nên hỏi trước khi order."
   }
 ];
