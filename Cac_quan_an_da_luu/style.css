@@ -174,11 +174,13 @@ h1{
 .note-text{
   display:-webkit-box;
   -webkit-line-clamp:3;
+  line-clamp:3;
   -webkit-box-orient:vertical;
   overflow:hidden;
 }
 .note-text.expanded{
   -webkit-line-clamp:unset;
+  line-clamp:unset;
   overflow:visible;
 }
 .note-toggle{
@@ -210,6 +212,15 @@ footer{ color:var(--ink-soft); }
 @media (max-width: 700px){
   .ledger table thead{ display:none; }
 
+  /* Bỏ khung/viền của .ledger gốc — mỗi hàng giờ tự là 1 thẻ riêng,
+     nếu giữ khung ngoài sẽ bị lồng "thẻ trong thẻ" */
+  .ledger{
+    background:transparent;
+    border:none;
+    border-radius:0;
+    box-shadow:none;
+  }
+
   .ledger table,
   .ledger tbody,
   .ledger tr,
@@ -222,7 +233,7 @@ footer{ color:var(--ink-soft); }
     background:var(--paper-card);
     border:1px solid var(--line);
     border-radius:10px;
-    margin:12px;
+    margin:0 0 12px;
     padding:12px 14px;
     box-shadow:0 2px 8px rgba(28,43,69,0.06);
   }
