@@ -39,8 +39,8 @@ Chuỗi quán gà rán/gà phô mai kiểu Hàn Quốc, nổi bật với món g
   - Lê Văn Duyệt: 106 Lê Văn Duyệt, P.1, Quận Bình Thạnh
   - Tân Bình: 28 Trương Công Định, P.14, Quận Tân Bình
   - Gò Vấp: 699 Phan Văn Trị, P.1, Quận Gò Vấp
-**Ghi chú sau khi ăn:**
-_(chưa đi)_
+
+**Ghi chú sau khi ăn:** Đã ăn thử, ấn tượng nhất là món gà sốt mù tạt mật ong — vị lạ, ít quán khác có, sẽ quay lại để ăn lại món này.
 
 ---
 

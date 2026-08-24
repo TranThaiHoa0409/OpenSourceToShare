@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sổ Quán Ăn — Danh sách đã lưu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,500;0,600;0,700;0,800;1,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F1EAD4;
+    --paper-card: #FBF8EE;
+    --ink: #1C2B45;
+    --ink-soft: #4A5568;
+    --lacquer: #A11D2E;
+    --lacquer-dark: #7E1522;
+    --brass: #9A7B3F;
+    --jade: #33604C;
+    --line: rgba(28,43,69,0.14);
+    --shadow: 0 1px 0 rgba(28,43,69,0.06);
+  }
+
+  *{box-sizing:border-box;}
+
+  html,body{
+    margin:0;
+    padding:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Be Vietnam Pro', sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  body{
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(28,43,69,0.05) 1px, transparent 1px);
+    background-size: 14px 14px;
+  }
+
+  .wrap{
+    max-width:980px;
+    margin:0 auto;
+    padding:48px 24px 96px;
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:24px;
+    border-bottom:3px solid var(--ink);
+    padding-bottom:20px;
+    margin-bottom:8px;
+    flex-wrap:wrap;
+  }
+
+  .kicker{
+    font-size:12px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--lacquer);
+    font-weight:700;
+    margin:0 0 6px;
+  }
+
+  h1{
+    font-size:clamp(28px, 4vw, 40px);
+    font-weight:800;
+    margin:0;
+    line-height:1.1;
+    letter-spacing:-0.01em;
+  }
+
+  .meta{
+    text-align:right;
+    font-size:13px;
+    color:var(--ink-soft);
+    line-height:1.5;
+  }
+  .meta strong{ color:var(--ink); font-weight:700; }
+
+  /* ---------- Controls ---------- */
+  .controls{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:16px;
+    flex-wrap:wrap;
+    margin:28px 0 18px;
+  }
+
+  .tabs{
+    display:flex;
+    gap:6px;
+    flex-wrap:wrap;
+  }
+
+  .tab{
+    font-family:inherit;
+    font-size:13px;
+    font-weight:600;
+    color:var(--ink-soft);
+    background:var(--paper-card);
+    border:1px solid var(--line);
+    border-bottom:3px solid transparent;
+    border-radius:6px 6px 0 0;
+    padding:8px 14px;
+    cursor:pointer;
+    transition:all .15s ease;
+  }
+  .tab:hover{ color:var(--ink); }
+  .tab.active{
+    color:var(--lacquer);
+    border-bottom-color:var(--lacquer);
+    background:var(--paper-card);
+    box-shadow:var(--shadow);
+  }
+
+  .search{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:var(--paper-card);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:8px 12px;
+    min-width:220px;
+  }
+  .search svg{ flex:none; opacity:0.5; }
+  .search input{
+    border:none;
+    background:none;
+    outline:none;
+    font-family:inherit;
+    font-size:13px;
+    color:var(--ink);
+    width:100%;
+  }
+  .search input::placeholder{ color:#9AA3B2; }
+
+  /* ---------- Table (ledger) ---------- */
+  .ledger{
+    background:var(--paper-card);
+    border:1px solid var(--line);
+    border-radius:8px;
+    overflow:hidden;
+    box-shadow: 0 8px 24px rgba(28,43,69,0.06);
+  }
+
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:14px;
+  }
+
+  thead th{
+    text-align:left;
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    font-weight:700;
+    color:#fff;
+    background:var(--ink);
+    padding:12px 14px;
+    white-space:nowrap;
+    cursor:pointer;
+    user-select:none;
+    position:relative;
+  }
+  thead th:hover{ background:#26375A; }
+  thead th .arrow{
+    display:inline-block;
+    margin-left:4px;
+    font-size:10px;
+    opacity:0;
+    transition:opacity .15s;
+  }
+  thead th.sorted .arrow{ opacity:0.85; }
+
+  tbody tr{
+    border-bottom:1px solid var(--line);
+    transition:background .12s ease;
+  }
+  tbody tr:last-child{ border-bottom:none; }
+  tbody tr:hover{ background:rgba(161,29,46,0.045); }
+
+  tbody td{
+    padding:13px 14px;
+    vertical-align:top;
+    color:var(--ink);
+  }
+
+  .col-name{ min-width:170px; }
+  .name-vn{ font-weight:700; }
+
+  .branch-list{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+  .branch-list li{
+    padding-bottom:8px;
+    border-bottom:1px dashed var(--line);
+  }
+  .branch-list li:last-child{
+    padding-bottom:0;
+    border-bottom:none;
+  }
+  .branch-label{
+    display:block;
+    font-size:11px;
+    font-weight:700;
+    color:var(--lacquer);
+    text-transform:uppercase;
+    letter-spacing:0.04em;
+    margin-bottom:2px;
+  }
+  .branch-addr{ color:var(--ink-soft); font-size:13px; line-height:1.5; }
+  .branch-hours{
+    font-variant-numeric: tabular-nums;
+    font-weight:600;
+    font-size:12px;
+    color:var(--ink);
+    margin-top:2px;
+  }
+
+  .badge{
+    display:inline-block;
+    font-size:11px;
+    font-weight:700;
+    padding:3px 9px;
+    border-radius:999px;
+    white-space:nowrap;
+    border:1px solid transparent;
+  }
+  .badge-buffet{ background:#EFE1C4; color:#7A5A16; border-color:#D8BE8A; }
+  .badge-vat{ background:#E4E9F6; color:#2F4C8C; border-color:#C4CFE9; }
+  .badge-ga{ background:#FBE1D8; color:var(--lacquer-dark); border-color:#F2BBAA; }
+  .badge-tra{ background:#DDEFE4; color:var(--jade); border-color:#B9DCC5; }
+
+  .addr{ color:var(--ink-soft); font-size:13px; line-height:1.5; }
+  .hours{
+    font-variant-numeric: tabular-nums;
+    font-weight:600;
+    font-size:13px;
+    white-space:nowrap;
+  }
+  .hours-note{
+    display:block;
+    font-size:11px;
+    font-weight:500;
+    color:var(--ink-soft);
+    margin-top:2px;
+  }
+
+  .status{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-size:12px;
+    font-weight:700;
+  }
+  .status.visited{ color:var(--jade); }
+  .status.unvisited{ color:#9AA3B2; }
+  .dot{
+    width:7px; height:7px; border-radius:50%;
+    background:currentColor;
+    flex:none;
+  }
+
+  .note{
+    font-size:13px;
+    color:var(--ink-soft);
+    max-width:260px;
+    line-height:1.5;
+  }
+  .note em{ color:var(--ink); font-style:normal; font-weight:600; }
+
+  .stamp{
+    display:inline-block;
+    margin-top:6px;
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:0.06em;
+    color:var(--lacquer);
+    border:1.5px solid var(--lacquer);
+    border-radius:4px;
+    padding:2px 6px;
+    transform:rotate(-3deg);
+    text-transform:uppercase;
+  }
+
+  .empty-row td{
+    text-align:center;
+    padding:40px 14px;
+    color:var(--ink-soft);
+    font-style:italic;
+  }
+
+  footer{
+    margin-top:32px;
+    text-align:center;
+    font-size:12px;
+    color:var(--ink-soft);
+  }
+
+  @media (max-width: 640px){
+    .wrap{ padding:32px 14px 64px; }
+    header{ flex-direction:column; align-items:flex-start; }
+    .meta{ text-align:left; }
+    .ledger{ overflow-x:auto; }
+    table{ min-width:640px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <header>
+    <div>
+      <p class="kicker">Sổ tay cá nhân</p>
+      <h1>Quán Ăn Đã Lưu</h1>
+    </div>
+    <div class="meta">
+      <div><strong id="count-visible">0</strong> quán đang hiển thị</div>
+      <div>Cập nhật gần nhất: tháng 8, 2026</div>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="tabs" id="tabs"></div>
+    <div class="search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+      <input id="search-input" type="text" placeholder="Tìm theo tên, quận...">
+    </div>
+  </div>
+
+  <div class="ledger">
+    <table>
+      <thead>
+        <tr>
+          <th data-key="name">Quán <span class="arrow">▾</span></th>
+          <th data-key="category">Loại <span class="arrow">▾</span></th>
+          <th data-key="address">Địa chỉ <span class="arrow">▾</span></th>
+          <th data-key="hours">Giờ mở cửa <span class="arrow">▾</span></th>
+          <th data-key="note">Ghi chú</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+    </table>
+  </div>
+
+  <footer>Nhấn vào tiêu đề cột để sắp xếp · Nguồn: OpenSourceToShare</footer>
+
+</div>
+
+<script>
+const DATA = [
+  {
+    name: "Buffet 79k Hương Việt",
+    category: "Buffet",
+    badge: "badge-buffet",
+    branches: [
+      { label: "CN1", address: "22 Tân Quý, Quận Tân Phú", hours: "15:00–22:00", hoursNote: "Ngừng nhận khách lúc 21:00" },
+      { label: "CN2", address: "644 Nguyễn Văn Quá, Quận 12", hours: "15:00–21:00" }
+    ],
+    note: "Buffet 79k, ăn thoải mái bún đậu, nem nướng, bánh tráng thịt luộc."
+  },
+  {
+    name: "Kim Cherry",
+    category: "Ăn vặt",
+    badge: "badge-vat",
+    branches: [
+      { label: "", address: "53 Nguyễn Trãi, P. Chợ Quán, Q.5 (đối diện ĐH Sài Gòn)", hours: "08:00–22:00" }
+    ],
+    note: "Xe bánh tráng nhỏ, có chỗ ngồi. Nổi bật bánh tráng mỡ hành (15–20k), bánh tráng trứng gà vữa (20k), sate tuổi thơ, trà sữa/trà trái cây tự pha."
+  },
+  {
+    name: "Kokoria – Chicken & Cheese",
+    category: "Gà Hàn",
+    badge: "badge-ga",
+    branches: [
+      { label: "Sư Vạn Hạnh", address: "573/2 Sư Vạn Hạnh, P.12, Quận 10", hours: "10:30–22:00" },
+      { label: "Lê Văn Duyệt", address: "106 Lê Văn Duyệt, P.1, Quận Bình Thạnh", hours: "10:30–22:00" },
+      { label: "Tân Bình", address: "28 Trương Công Định, P.14, Quận Tân Bình", hours: "10:30–22:00" },
+      { label: "Gò Vấp", address: "699 Phan Văn Trị, P.1, Quận Gò Vấp", hours: "10:30–22:00" }
+    ],
+    note: "Ấn tượng nhất là gà sốt mù tạt mật ong — vị lạ, ít quán khác có. Sẽ quay lại vì món này."
+  }
+];
+
+// --- Vietnamese-friendly search: strip diacritics + tone marks, handle đ/Đ, lowercase ---
+function normalizeVN(str){
+  return (str || "")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d")
+    .replace(/Đ/g, "D")
+    .toLowerCase()
+    .trim();
+}
+
+const CATEGORIES = ["Tất cả", ...Array.from(new Set(DATA.map(d => d.category)))];
+
+let state = { category: "Tất cả", query: "", sortKey: "name", sortDir: 1 };
+
+function renderTabs(){
+  const tabsEl = document.getElementById("tabs");
+  tabsEl.innerHTML = "";
+  CATEGORIES.forEach(cat => {
+    const btn = document.createElement("button");
+    btn.className = "tab" + (state.category === cat ? " active" : "");
+    btn.textContent = cat;
+    btn.addEventListener("click", () => { state.category = cat; render(); });
+    tabsEl.appendChild(btn);
+  });
+}
+
+function getFiltered(){
+  let rows = DATA.filter(r => state.category === "Tất cả" || r.category === state.category);
+  if(state.query.trim()){
+    const q = normalizeVN(state.query);
+    rows = rows.filter(r => {
+      const haystack = [
+        r.name,
+        r.category,
+        r.note,
+        ...r.branches.map(b => b.label),
+        ...r.branches.map(b => b.address)
+      ].map(normalizeVN).join(" | ");
+      return haystack.includes(q);
+    });
+  }
+  rows = rows.slice().sort((a,b) => {
+    let av, bv;
+    if(state.sortKey === "hours"){
+      av = a.branches[0].hours; bv = b.branches[0].hours;
+    } else if(state.sortKey === "address"){
+      av = a.branches[0].address; bv = b.branches[0].address;
+    } else {
+      av = (a[state.sortKey] || "").toString();
+      bv = (b[state.sortKey] || "").toString();
+    }
+    av = normalizeVN(av); bv = normalizeVN(bv);
+    if(av < bv) return -1 * state.sortDir;
+    if(av > bv) return 1 * state.sortDir;
+    return 0;
+  });
+  return rows;
+}
+
+function renderTable(){
+  const rows = getFiltered();
+  const body = document.getElementById("table-body");
+  body.innerHTML = "";
+
+  if(rows.length === 0){
+    body.innerHTML = '<tr class="empty-row"><td colspan="5">Không tìm thấy quán nào.</td></tr>';
+  } else {
+    rows.forEach(r => {
+      const tr = document.createElement("tr");
+      const branchItems = r.branches.map(b => `
+        <li>
+          ${b.label ? `<span class="branch-label">${b.label}</span>` : ""}
+          <span class="branch-addr">${b.address}</span>
+        </li>
+      `).join("");
+      const hoursItems = r.branches.map(b => `
+        <li>
+          ${b.label ? `<span class="branch-label">${b.label}</span>` : ""}
+          <span class="branch-hours">${b.hours}</span>
+          ${b.hoursNote ? `<span class="hours-note">${b.hoursNote}</span>` : ""}
+        </li>
+      `).join("");
+      tr.innerHTML = `
+        <td class="col-name">
+          <span class="name-vn">${r.name}</span>
+        </td>
+        <td><span class="badge ${r.badge}">${r.category}</span></td>
+        <td><ul class="branch-list">${branchItems}</ul></td>
+        <td><ul class="branch-list">${hoursItems}</ul></td>
+        <td class="note">${r.note}</td>
+      `;
+      body.appendChild(tr);
+    });
+  }
+
+  document.getElementById("count-visible").textContent = rows.length;
+}
+
+function renderSortIndicators(){
+  document.querySelectorAll("thead th").forEach(th => {
+    th.classList.remove("sorted");
+    const arrow = th.querySelector(".arrow");
+    if(th.dataset.key === state.sortKey){
+      th.classList.add("sorted");
+      arrow.textContent = state.sortDir === 1 ? "▾" : "▴";
+    } else {
+      arrow.textContent = "▾";
+    }
+  });
+}
+
+function render(){
+  renderTabs();
+  renderTable();
+  renderSortIndicators();
+}
+
+document.querySelectorAll("thead th").forEach(th => {
+  th.addEventListener("click", () => {
+    const key = th.dataset.key;
+    if(state.sortKey === key){ state.sortDir *= -1; }
+    else { state.sortKey = key; state.sortDir = 1; }
+    render();
+  });
+});
+
+document.getElementById("search-input").addEventListener("input", (e) => {
+  state.query = e.target.value;
+  render();
+});
+
+render();
+</script>
+
+</body>
+</html>
