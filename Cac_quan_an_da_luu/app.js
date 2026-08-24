@@ -23,11 +23,15 @@ function renderTabs(){
   const tabsEl = document.getElementById("tabs");
   tabsEl.innerHTML = "";
   CATEGORIES.forEach(cat => {
+    const li = document.createElement("li");
+    li.className = "nav-item";
     const btn = document.createElement("button");
-    btn.className = "tab" + (state.category === cat ? " active" : "");
+    btn.className = "nav-link" + (state.category === cat ? " active" : "");
+    btn.type = "button";
     btn.textContent = cat;
     btn.addEventListener("click", () => { state.category = cat; render(); });
-    tabsEl.appendChild(btn);
+    li.appendChild(btn);
+    tabsEl.appendChild(li);
   });
 }
 
@@ -98,7 +102,7 @@ function renderTable(){
         <td class="col-name">
           <span class="name-vn">${r.name}</span>
         </td>
-        <td><span class="badge ${r.badge}">${r.category}</span></td>
+        <td><span class="badge rounded-pill ${r.badge}">${r.category}</span></td>
         <td><ul class="branch-list">${branchItems}</ul></td>
         <td><ul class="branch-list">${hoursItems}</ul></td>
         <td><ul class="branch-list">${phoneItems}</ul></td>
