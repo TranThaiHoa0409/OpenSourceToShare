@@ -61,7 +61,7 @@ const DATA = [
   },
   {
     name: "Bún Thang Cậu Ba",
-    category: "Bún/Phở",
+    category: "Bún",
     badge: "badge-bun",
     branches: [
       { label: "", address: "829 Trần Hưng Đạo, P.1, Quận 5", hours: "06:00–15:00", phone: "" }
@@ -103,5 +103,32 @@ const DATA = [
       { label: "", address: "85 Cô Giang, P. Cầu Ông Lãnh, Quận 1", hours: "15:00–22:00", phone: "" }
     ],
     note: "Quán chè về đêm luôn đông khách, đa dạng loại chè: chè ba màu, sâm bổ lượng, chè đậu đen nước cốt dừa, chè đậu xanh, chè mè đen. Giá rẻ, khoảng 18k/ly. Không gian ngồi hơi chật, chủ yếu khách quen ghé ăn."
+  },
+  {
+    name: "Bingsu Cafe (BingBing)",
+    category: "Bingsu",
+    badge: "badge-bingsu",
+    branches: [
+      { label: "", address: "283/72 Cách Mạng Tháng Tám, Quận 10", hours: "10:30–23:30", phone: "0704 412 082" }
+    ],
+    note: "Bingsu có 3 size, size nhỏ vẫn đủ cho 1 người ăn. Không gian nhỏ nhưng décor dễ thương, nhân viên thân thiện, có hỏi trước độ cay khi order món khác kèm."
+  },
+  {
+    name: "Bún Bò Huế Cô Ân",
+    category: "Bún",
+    badge: "badge-bun",
+    branches: [
+      { label: "", address: "331/10 Đ. Nguyễn Thiện Thuật, P. Bàn Cờ", hours: "24/24", phone: "028 3833 2806" }
+    ],
+    note: "Bún bò Huế đúng vị, chủ quán gốc Huế, nước dùng đậm đà thơm mắm ruốc. Quán mở 24/24, nhiều thịt, giá hợp lý. Có chú chó nhỏ dễ thương chạy quanh quán."
+  },
+  {
+    name: "Bún Thịt Nướng Chả Giò - Nguyễn Trung Trực",
+    category: "Bún",
+    badge: "badge-bun",
+    branches: [
+      { label: "", address: "1 Nguyễn Trung Trực, P. Bến Thành", hours: "06:00–20:30", phone: "0909 139 017" }
+    ],
+    note: "Bún thịt nướng lâu năm nổi tiếng, chả giò giòn. Ngồi ghế nhựa bên lề đường đối diện quán. Giá khoảng 190k/2 phần, gần trung tâm."
   }
 ];
