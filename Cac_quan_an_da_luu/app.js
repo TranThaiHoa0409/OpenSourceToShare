@@ -112,23 +112,31 @@ function initNoteToggles(){
     const text = cell.querySelector(".note-text");
     const btn = cell.querySelector(".note-toggle");
 
-    // reset trạng thái cũ (phòng khi render lại / đổi kích thước màn hình)
-    text.style.display = "";
-    text.style.webkitBoxOrient = "";
-    text.style.webkitLineClamp = "";
-    text.style.overflow = "";
+    // Reset phần chung (không đụng tới line-clamp ở đây — mỗi nhánh
+    // mobile/desktop bên dưới tự set clamp tường minh cho đúng ngữ cảnh).
     text.classList.remove("expanded");
     btn.classList.add("d-none");
     btn.textContent = "Xem thêm";
 
     if(isMobile){
-      // Mobile: CSS đã giới hạn 1 dòng — chỉ cần phát hiện có bị cắt hay không
+      // Mobile: dựa vào rule CSS mặc định .note-text{-webkit-line-clamp:1}.
+      // Xoá mọi style inline có thể còn sót lại từ lần đo desktop trước đó
+      // (ví dụ khi người dùng thu nhỏ cửa sổ), để quay lại đúng CSS mặc định.
+      text.style.display = "";
+      text.style.webkitBoxOrient = "";
+      text.style.webkitLineClamp = "";
+      text.style.overflow = "";
+
       if(text.scrollHeight > text.clientHeight + 1){
         btn.classList.remove("d-none");
-        btn.addEventListener("click", () => {
+        // Dùng onclick (không phải addEventListener) — initNoteToggles() có thể
+        // chạy lại nhiều lần trên CÙNG một nút (ví dụ mỗi lần resize), nếu dùng
+        // addEventListener thì listener sẽ cộng dồn: số lượng chẵn -> bấm 1 cái
+        // là mở-rồi-đóng ngay trong cùng 1 click, nhìn như nút không phản ứng gì.
+        btn.onclick = () => {
           const expanded = text.classList.toggle("expanded");
           btn.textContent = expanded ? "Thu gọn" : "Xem thêm";
-        });
+        };
       }
     } else {
       // Desktop: chỉ giới hạn ghi chú nếu nó CAO HƠN cột "Chi nhánh" của
@@ -151,16 +159,29 @@ function initNoteToggles(){
       const naturalLines = Math.round(naturalHeight / lineHeight);
       const maxLines = Math.max(1, Math.floor(targetHeight / lineHeight));
 
+      const applyClamp = (lines) => {
+        text.style.display = "-webkit-box";
+        text.style.webkitBoxOrient = "vertical";
+        text.style.webkitLineClamp = lines;
+        text.style.overflow = "hidden";
+      };
+      // Trạng thái "hiện đầy đủ", set TƯỜNG MINH — không dựa vào việc
+      // reset style inline về "" (vì lúc đó CSS mặc định -webkit-line-clamp:1
+      // của .note-text vẫn còn hiệu lực và sẽ âm thầm cắt về 1 dòng, dù
+      // JS đã tính là không cần cắt gì cả — đây chính là bug gốc).
+      const showFull = () => {
+        text.style.display = "-webkit-box";
+        text.style.webkitBoxOrient = "vertical";
+        text.style.webkitLineClamp = "none";
+        text.style.overflow = "visible";
+      };
+
       if(naturalLines > maxLines){
-        const applyClamp = (lines) => {
-          text.style.display = "-webkit-box";
-          text.style.webkitBoxOrient = "vertical";
-          text.style.webkitLineClamp = lines;
-          text.style.overflow = "hidden";
-        };
         applyClamp(maxLines);
         btn.classList.remove("d-none");
-        btn.addEventListener("click", () => {
+        // onclick thay vì addEventListener — cùng lý do như nhánh mobile ở trên:
+        // tránh cộng dồn listener khi initNoteToggles() chạy lại (resize...).
+        btn.onclick = () => {
           const collapsed = text.style.webkitLineClamp !== "none" && text.style.webkitLineClamp !== "";
           if(collapsed){
             text.style.webkitLineClamp = "none";
@@ -170,7 +191,9 @@ function initNoteToggles(){
             applyClamp(maxLines);
             btn.textContent = "Xem thêm";
           }
-        });
+        };
+      } else {
+        showFull();
       }
     }
   });
