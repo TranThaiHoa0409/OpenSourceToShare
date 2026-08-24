@@ -106,16 +106,72 @@ function renderTable(){
 }
 
 function initNoteToggles(){
+  const isMobile = window.matchMedia("(max-width: 700px)").matches;
+
   document.querySelectorAll(".note").forEach(cell => {
     const text = cell.querySelector(".note-text");
     const btn = cell.querySelector(".note-toggle");
-    // Chỉ hiện nút "Xem thêm" nếu nội dung thực sự bị cắt bớt (quá 3 dòng)
-    if(text.scrollHeight > text.clientHeight + 1){
-      btn.classList.remove("d-none");
-      btn.addEventListener("click", () => {
-        const expanded = text.classList.toggle("expanded");
-        btn.textContent = expanded ? "Thu gọn" : "Xem thêm";
-      });
+
+    // reset trạng thái cũ (phòng khi render lại / đổi kích thước màn hình)
+    text.style.display = "";
+    text.style.webkitBoxOrient = "";
+    text.style.webkitLineClamp = "";
+    text.style.overflow = "";
+    text.classList.remove("expanded");
+    btn.classList.add("d-none");
+    btn.textContent = "Xem thêm";
+
+    if(isMobile){
+      // Mobile: CSS đã giới hạn 1 dòng — chỉ cần phát hiện có bị cắt hay không
+      if(text.scrollHeight > text.clientHeight + 1){
+        btn.classList.remove("d-none");
+        btn.addEventListener("click", () => {
+          const expanded = text.classList.toggle("expanded");
+          btn.textContent = expanded ? "Thu gọn" : "Xem thêm";
+        });
+      }
+    } else {
+      // Desktop: chỉ giới hạn ghi chú nếu nó CAO HƠN cột "Chi nhánh" của
+      // cùng hàng — nếu hàng đã đủ chỗ (nhiều chi nhánh) thì hiện full luôn.
+      // Cắt theo SỐ DÒNG TRỌN VẸN (line-clamp), không cắt theo pixel để
+      // tránh cắt ngang giữa dòng chữ.
+      const row = cell.closest("tr");
+      const branchCell = row.children[2];
+      if(!branchCell) return;
+
+      // Đo chiều cao thật của nội dung chi nhánh (div .branch-list),
+      // KHÔNG đo trực tiếp <td> — vì các ô trong cùng 1 hàng bảng HTML
+      // luôn tự kéo giãn cao bằng nhau, nên offsetHeight của <td> không
+      // phản ánh đúng nội dung thật, làm phép so sánh bị sai lệch.
+      const branchList = branchCell.querySelector(".branch-list");
+      const targetHeight = branchList ? branchList.offsetHeight : branchCell.offsetHeight;
+      const naturalHeight = text.scrollHeight;
+
+      const lineHeight = parseFloat(getComputedStyle(text).lineHeight) || 20;
+      const naturalLines = Math.round(naturalHeight / lineHeight);
+      const maxLines = Math.max(1, Math.floor(targetHeight / lineHeight));
+
+      if(naturalLines > maxLines){
+        const applyClamp = (lines) => {
+          text.style.display = "-webkit-box";
+          text.style.webkitBoxOrient = "vertical";
+          text.style.webkitLineClamp = lines;
+          text.style.overflow = "hidden";
+        };
+        applyClamp(maxLines);
+        btn.classList.remove("d-none");
+        btn.addEventListener("click", () => {
+          const collapsed = text.style.webkitLineClamp !== "none" && text.style.webkitLineClamp !== "";
+          if(collapsed){
+            text.style.webkitLineClamp = "none";
+            text.style.overflow = "visible";
+            btn.textContent = "Thu gọn";
+          } else {
+            applyClamp(maxLines);
+            btn.textContent = "Xem thêm";
+          }
+        });
+      }
     }
   });
 }
@@ -151,6 +207,12 @@ document.querySelectorAll("thead th").forEach(th => {
 document.getElementById("search-input").addEventListener("input", (e) => {
   state.query = e.target.value;
   render();
+});
+
+let resizeTimer;
+window.addEventListener("resize", () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(initNoteToggles, 150);
 });
 
 render();
