@@ -52,6 +52,8 @@ function getFiltered(){
       av = a.branches[0].hours; bv = b.branches[0].hours;
     } else if(state.sortKey === "address"){
       av = a.branches[0].address; bv = b.branches[0].address;
+    } else if(state.sortKey === "phone"){
+      av = a.branches[0].phone || ""; bv = b.branches[0].phone || "";
     } else {
       av = (a[state.sortKey] || "").toString();
       bv = (b[state.sortKey] || "").toString();
@@ -84,7 +86,12 @@ function renderTable(){
         <li>
           ${b.label ? `<span class="branch-label">${b.label}</span>` : ""}
           <span class="branch-hours">${b.hours}</span>
-          ${b.hoursNote ? `<span class="hours-note">${b.hoursNote}</span>` : ""}
+        </li>
+      `).join("");
+      const phoneItems = r.branches.map(b => `
+        <li>
+          ${b.label ? `<span class="branch-label">${b.label}</span>` : ""}
+          <span class="branch-hours">${b.phone || "—"}</span>
         </li>
       `).join("");
       tr.innerHTML = `
@@ -94,6 +101,7 @@ function renderTable(){
         <td><span class="badge ${r.badge}">${r.category}</span></td>
         <td><ul class="branch-list">${branchItems}</ul></td>
         <td><ul class="branch-list">${hoursItems}</ul></td>
+        <td><ul class="branch-list">${phoneItems}</ul></td>
         <td class="note">${r.note}</td>
       `;
       body.appendChild(tr);
