@@ -161,6 +161,8 @@ h1{
 .badge-vat{ background:#E4E9F6; color:#2F4C8C; }
 .badge-ga{ background:#FBE1D8; color:var(--lacquer-dark); }
 .badge-tra{ background:#DDEFE4; color:var(--jade); }
+.badge-com{ background:#F0E4D0; color:#6B4A1E; }
+.badge-bun{ background:#DDE8E3; color:#1F5C4A; }
 
 .note{
   font-size:13px;

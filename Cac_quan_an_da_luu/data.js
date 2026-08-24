@@ -49,5 +49,23 @@ const DATA = [
       { label: "Gò Vấp", address: "699 Phan Văn Trị, P.1, Quận Gò Vấp", hours: "10:30–22:00", phone: "0938 115 428" }
     ],
     note: "Ấn tượng nhất là gà sốt mù tạt mật ong — vị lạ, ít quán khác có. Sẽ quay lại vì món này."
+  },
+  {
+    name: "Cơm gà xối mỡ Thanh",
+    category: "Cơm gà",
+    badge: "badge-com",
+    branches: [
+      { label: "", address: "Hẻm 214 Nguyễn Trãi, P.2, Quận 5", hours: "15:00–23:00", phone: "" }
+    ],
+    note: "Gà xối mỡ giòn rụm, mềm bên trong. Cơm thấm mỡ gà, tơi xốp. Có thêm cơm chiên thịt heo xù, mực sốt chua ngọt."
+  },
+  {
+    name: "Bún Thang Cậu Ba",
+    category: "Bún/Phở",
+    badge: "badge-bun",
+    branches: [
+      { label: "", address: "829 Trần Hưng Đạo, P.1, Quận 5", hours: "06:00–15:00", phone: "" }
+    ],
+    note: "Bún thang chuẩn vị miền Bắc, nước dùng trong ngọt từ xương gà và tôm khô, ăn kèm gà xé, giò lụa, trứng thái sợi, nấm hương, mắm tôm. Có thêm bún mọc, phở gà, miến gà."
   }
 ];
