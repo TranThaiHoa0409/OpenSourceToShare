@@ -4,8 +4,8 @@
    ============================================================ */
 
 :root{
-  --paper: #E9DFC3;       /* nền trang */
-  --paper-card: #F6EFD6;  /* nền thẻ/bảng — vàng kem, khác tông với nền trang nhưng không phải trắng */
+  --paper: #E3DAC3;       /* nền trang */
+  --paper-card: #EAE3CE;  /* nền thẻ — vàng dịu, gần màu nền, chỉ hơi nhạt hơn */
   --ink: #1C2B45;
   --ink-soft: #4A5568;
   --lacquer: #A11D2E;
@@ -105,6 +105,7 @@ h1{
   cursor:pointer;
   user-select:none;
   border:none;
+  text-align:center;
 }
 .table thead th:hover{ background:#26375A; }
 .table thead th .arrow{
@@ -161,6 +162,7 @@ h1{
 .badge-tra{ background:#DDEFE4; color:var(--jade); }
 .badge-com{ background:#F0E4D0; color:#6B4A1E; }
 .badge-bun{ background:#DDE8E3; color:#1F5C4A; }
+.badge-chao{ background:#E9DCF0; color:#5B3A7A; }
 
 /* ---------- Ghi chú: giới hạn 3 dòng, có nút "Xem thêm" ---------- */
 .note{
@@ -214,7 +216,7 @@ footer{ color:var(--ink-soft); }
      với nền trang, khác với viền mảnh của từng thẻ quán bên trong */
   .ledger{
     background:var(--paper);
-    border:1.5px solid rgba(28,43,69,0.35);
+    border:2.5px solid var(--ink);
     border-radius:14px;
     box-shadow:none;
     padding:14px;
@@ -230,7 +232,7 @@ footer{ color:var(--ink-soft); }
 
   .ledger tbody tr{
     background:var(--paper-card);
-    border:1px solid var(--line);
+    border:1px solid rgba(28,43,69,0.22);
     border-radius:10px;
     margin:0 0 12px;
     padding:16px 18px;
