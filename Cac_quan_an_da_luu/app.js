@@ -103,16 +103,35 @@ function renderTable(){
           <span class="name-vn">${r.name}</span>
         </td>
         <td><span class="badge rounded-pill ${r.badge}">${r.category}</span></td>
-        <td><ul class="branch-list">${branchItems}</ul></td>
-        <td><ul class="branch-list">${hoursItems}</ul></td>
-        <td><ul class="branch-list">${phoneItems}</ul></td>
-        <td class="note">${r.note}</td>
+        <td data-label="Địa chỉ"><ul class="branch-list">${branchItems}</ul></td>
+        <td data-label="Giờ mở cửa"><ul class="branch-list">${hoursItems}</ul></td>
+        <td data-label="Liên hệ"><ul class="branch-list">${phoneItems}</ul></td>
+        <td class="note" data-label="Ghi chú">
+          <div class="note-text">${r.note}</div>
+          <button type="button" class="note-toggle d-none">Xem thêm</button>
+        </td>
       `;
       body.appendChild(tr);
     });
   }
 
   document.getElementById("count-visible").textContent = rows.length;
+  initNoteToggles();
+}
+
+function initNoteToggles(){
+  document.querySelectorAll(".note").forEach(cell => {
+    const text = cell.querySelector(".note-text");
+    const btn = cell.querySelector(".note-toggle");
+    // Chỉ hiện nút "Xem thêm" nếu nội dung thực sự bị cắt bớt (quá 3 dòng)
+    if(text.scrollHeight > text.clientHeight + 1){
+      btn.classList.remove("d-none");
+      btn.addEventListener("click", () => {
+        const expanded = text.classList.toggle("expanded");
+        btn.textContent = expanded ? "Thu gọn" : "Xem thêm";
+      });
+    }
+  });
 }
 
 function renderSortIndicators(){
