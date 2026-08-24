@@ -123,18 +123,15 @@ h1{
 .name-vn{ font-weight:700; }
 
 .branch-list{
-  list-style:none;
-  margin:0;
-  padding:0;
   display:flex;
   flex-direction:column;
   gap:8px;
 }
-.branch-list li{
+.branch-block{
   padding-bottom:8px;
   border-bottom:1px dashed var(--line);
 }
-.branch-list li:last-child{
+.branch-block:last-child{
   padding-bottom:0;
   border-bottom:none;
 }
@@ -148,13 +145,14 @@ h1{
   margin-bottom:2px;
 }
 .branch-addr{ color:var(--ink-soft); font-size:13px; line-height:1.5; }
-.branch-hours{
+.branch-meta{
   font-variant-numeric: tabular-nums;
   font-weight:600;
   font-size:12px;
   color:var(--ink);
   margin-top:2px;
 }
+.branch-phone{ font-weight:500; color:var(--ink-soft); margin-left:2px; }
 
 /* ---------- Badges (Bootstrap .badge + màu riêng theo loại quán) ---------- */
 .badge-buffet{ background:#EFE1C4; color:#7A5A16; }
@@ -250,7 +248,7 @@ footer{ color:var(--ink-soft); }
 
   .ledger td:nth-child(2){ padding-top:0; padding-bottom:8px !important; }
 
-  /* Nhãn nhỏ phía trên mỗi trường thông tin (địa chỉ, giờ, liên hệ, ghi chú) */
+  /* Nhãn nhỏ phía trên cột Chi nhánh / Ghi chú */
   .ledger td[data-label]::before{
     content: attr(data-label);
     display:block;
@@ -259,7 +257,7 @@ footer{ color:var(--ink-soft); }
     text-transform:uppercase;
     letter-spacing:0.06em;
     color:var(--lacquer);
-    margin-bottom:3px;
+    margin-bottom:6px;
   }
 
   .note{ max-width:none; }

@@ -52,12 +52,8 @@ function getFiltered(){
   }
   rows = rows.slice().sort((a,b) => {
     let av, bv;
-    if(state.sortKey === "hours"){
-      av = a.branches[0].hours; bv = b.branches[0].hours;
-    } else if(state.sortKey === "address"){
+    if(state.sortKey === "address"){
       av = a.branches[0].address; bv = b.branches[0].address;
-    } else if(state.sortKey === "phone"){
-      av = a.branches[0].phone || ""; bv = b.branches[0].phone || "";
     } else {
       av = (a[state.sortKey] || "").toString();
       bv = (b[state.sortKey] || "").toString();
@@ -76,36 +72,26 @@ function renderTable(){
   body.innerHTML = "";
 
   if(rows.length === 0){
-    body.innerHTML = '<tr class="empty-row"><td colspan="5">Không tìm thấy quán nào.</td></tr>';
+    body.innerHTML = '<tr class="empty-row"><td colspan="4">Không tìm thấy quán nào.</td></tr>';
   } else {
     rows.forEach(r => {
       const tr = document.createElement("tr");
-      const branchItems = r.branches.map(b => `
-        <li>
+      const branchBlocks = r.branches.map(b => `
+        <div class="branch-block">
           ${b.label ? `<span class="branch-label">${b.label}</span>` : ""}
-          <span class="branch-addr">${b.address}</span>
-        </li>
-      `).join("");
-      const hoursItems = r.branches.map(b => `
-        <li>
-          ${b.label ? `<span class="branch-label">${b.label}</span>` : ""}
-          <span class="branch-hours">${b.hours}</span>
-        </li>
-      `).join("");
-      const phoneItems = r.branches.map(b => `
-        <li>
-          ${b.label ? `<span class="branch-label">${b.label}</span>` : ""}
-          <span class="branch-hours">${b.phone || "—"}</span>
-        </li>
+          <div class="branch-addr">${b.address}</div>
+          <div class="branch-meta">
+            <span class="branch-hours">${b.hours}</span>
+            ${b.phone ? `<span class="branch-phone">· ${b.phone}</span>` : ""}
+          </div>
+        </div>
       `).join("");
       tr.innerHTML = `
         <td class="col-name">
           <span class="name-vn">${r.name}</span>
         </td>
         <td><span class="badge rounded-pill ${r.badge}">${r.category}</span></td>
-        <td data-label="Địa chỉ"><ul class="branch-list">${branchItems}</ul></td>
-        <td data-label="Giờ mở cửa"><ul class="branch-list">${hoursItems}</ul></td>
-        <td data-label="Liên hệ"><ul class="branch-list">${phoneItems}</ul></td>
+        <td data-label="Chi nhánh"><div class="branch-list">${branchBlocks}</div></td>
         <td class="note" data-label="Ghi chú">
           <div class="note-text">${r.note}</div>
           <button type="button" class="note-toggle d-none">Xem thêm</button>
