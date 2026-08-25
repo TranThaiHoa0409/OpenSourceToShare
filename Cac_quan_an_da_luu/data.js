@@ -157,5 +157,23 @@ const DATA = [
       { label: "", address: "134/3/1 Bùi Thị Xuân, P. Bến Thành, Quận 1", hours: "09:00–14:00", phone: "0903 384 231" }
     ],
     note: "Quán cơm phần được sinh viên/dân văn phòng khu Quận 1 ưa chuộng, thực đơn đa dạng món, giá phải chăng. Chỉ bán buổi sáng-trưa, đóng cửa lúc 14:00."
+  },
+  {
+    name: "Hủ Tíu Xá Xíu Hoành Thánh",
+    category: "Hủ tiếu",
+    badge: "badge-hu-tieu",
+    branches: [
+      { label: "", address: "55 Phong Phú, P. Phú Định, Quận 8", hours: "15:30–23:30", phone: "" }
+    ],
+    note: "Xá xíu ngon xuất sắc, ăn khô cũng rất đã. Giá khoảng 42.000–55.000đ/tô. Quán lâu năm quen thuộc với người dân khu vực, không gian nhỏ hơi ngột ngạt."
+  },
+  {
+    name: "Hủ Tiếu Da Gà",
+    category: "Hủ tiếu",
+    badge: "badge-hu-tieu",
+    branches: [
+      { label: "", address: "43 Vĩnh Nam, P. Phú Định, Quận 8", hours: "06:30–21:00", phone: "0919 357 904" }
+    ],
+    note: "Hủ tiếu da gà giá bình dân, nước sốt được khen ngon. Quán khá đông khách, nên ghé trước 8 giờ sáng kẻo hết."
   }
 ];
