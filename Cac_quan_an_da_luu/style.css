@@ -160,7 +160,8 @@ h1{
 .badge-vat{ background:#E4E9F6; color:#2F4C8C; }
 .badge-ga{ background:#FBE1D8; color:var(--lacquer-dark); }
 .badge-tra{ background:#DDEFE4; color:var(--jade); }
-.badge-com{ background:#F0E4D0; color:#6B4A1E; }
+.badge-com{ background:#E9ECD6; color:#5B6B2E; }
+.badge-com-ga{ background:#F0E4D0; color:#6B4A1E; }
 .badge-bun{ background:#DDE8E3; color:#1F5C4A; }
 .badge-chao{ background:#E9DCF0; color:#5B3A7A; }
 .badge-che{ background:#F3E0EE; color:#7D3868; }

@@ -53,7 +53,7 @@ const DATA = [
   {
     name: "Cơm gà xối mỡ Thanh",
     category: "Cơm gà",
-    badge: "badge-com",
+    badge: "badge-com-ga",
     branches: [
       { label: "", address: "Hẻm 214 Nguyễn Trãi, P.2, Quận 5", hours: "15:00–23:00", phone: "" }
     ],
@@ -148,5 +148,14 @@ const DATA = [
       { label: "", address: "249a Lê Hồng Phong, P. Chợ Quán", hours: "12:30–22:30", phone: "0838 312 168" }
     ],
     note: "Chè kiểu Hoa, món nổi bật là chè mè đen & đậu phộng bày hình âm dương, vị béo thơm không quá ngọt. Quán 2 tầng, có máy lạnh, hợp nhóm đông. Một số món dễ hết sớm, nên hỏi trước khi order."
+  },
+  {
+    name: "Quán cơm Bento Dino - Bùi Thị Xuân",
+    category: "Cơm gà",
+    badge: "badge-com-ga",
+    branches: [
+      { label: "", address: "134/3/1 Bùi Thị Xuân, P. Bến Thành, Quận 1", hours: "09:00–14:00", phone: "0903 384 231" }
+    ],
+    note: "Quán cơm phần được sinh viên/dân văn phòng khu Quận 1 ưa chuộng, thực đơn đa dạng món, giá phải chăng. Chỉ bán buổi sáng-trưa, đóng cửa lúc 14:00."
   }
 ];
