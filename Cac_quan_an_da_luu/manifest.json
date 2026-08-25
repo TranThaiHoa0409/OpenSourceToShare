@@ -1,0 +1,22 @@
+{
+  "name": "Sổ Quán Ăn Đã Lưu",
+  "short_name": "Sổ Quán Ăn",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#E3DAC3",
+  "theme_color": "#A11D2E",
+  "icons": [
+    {
+      "src": "dish.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "dish-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
