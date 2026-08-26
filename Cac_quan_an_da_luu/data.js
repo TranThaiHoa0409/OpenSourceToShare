@@ -175,5 +175,14 @@ const DATA = [
       { label: "", address: "43 Vĩnh Nam, P. Phú Định, Quận 8", hours: "06:30–21:00", phone: "0919 357 904" }
     ],
     note: "Hủ tiếu da gà giá bình dân, nước sốt được khen ngon. Quán khá đông khách, nên ghé trước 8 giờ sáng kẻo hết."
+  },
+  {
+    name: "Xíu Mại Chén Chú IT",
+    category: "Xíu mại",
+    badge: "badge-xiu-mai",
+    branches: [
+      { label: "", address: "47 Đ. số 9A, KDC Trung Sơn, Bình Hưng", hours: "16:00–04:00", phone: "0939 100 789" }
+    ],
+    note: "Không gian trẻ trung, sạch sẽ, rộng rãi, hợp cả ăn một mình lẫn nhóm nhỏ. Xíu mại nóng hổi, nước lèo thanh nhẹ. Giá khoảng 30.000đ/người (kèm bánh mì)."
   }
 ];
