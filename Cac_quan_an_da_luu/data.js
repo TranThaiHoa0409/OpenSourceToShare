@@ -192,6 +192,6 @@ const DATA = [
     branches: [
       { label: "", address: "95 Phan Văn Trị, P. Chợ Quán", hours: "06:00–21:30", phone: "0908 274 112" }
     ],
-    note: "Bán cả nước lẫn khô, đa dạng combo với sườn/wonton. Nước lèo thanh nhẹ, được lòng khách quen ăn nhiều lần. Giá dao động 45.000–85.000đ tùy món."
+    note: "Bán cả nước lẫn khô, đa dạng combo với sườn/hoành thánh. Nước lèo thanh nhẹ, được lòng khách quen ăn nhiều lần. Giá dao động 45.000–85.000đ tùy món."
   }
 ];
