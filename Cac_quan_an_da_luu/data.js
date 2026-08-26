@@ -184,5 +184,14 @@ const DATA = [
       { label: "", address: "47 Đ. số 9A, KDC Trung Sơn, Bình Hưng", hours: "16:00–04:00", phone: "0939 100 789" }
     ],
     note: "Không gian trẻ trung, sạch sẽ, rộng rãi, hợp cả ăn một mình lẫn nhóm nhỏ. Xíu mại nóng hổi, nước lèo thanh nhẹ. Giá khoảng 30.000đ/người (kèm bánh mì)."
+  },
+  {
+    name: "Hủ Tiếu Mì Gia - A Hòa",
+    category: "Hủ tiếu Mì",
+    badge: "badge-hu-tieu-mi",
+    branches: [
+      { label: "", address: "95 Phan Văn Trị, P. Chợ Quán", hours: "06:00–21:30", phone: "0908 274 112" }
+    ],
+    note: "Bán cả nước lẫn khô, đa dạng combo với sườn/wonton. Nước lèo thanh nhẹ, được lòng khách quen ăn nhiều lần. Giá dao động 45.000–85.000đ tùy món."
   }
 ];
