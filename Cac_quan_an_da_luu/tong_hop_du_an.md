@@ -1,30 +1,56 @@
 # Tổng hợp — Sổ Quán Ăn Đã Lưu
 
-Repo: `TranThaiHoa0409/TranThaiHoaPersonalDirectories` (đã đổi tên, trước là
-`OpenSourceToShare`) — thư mục `Cac_quan_an_da_luu/`
+Repo: `TranThaiHoa0409/TranThaiHoaPersonalDirectories` — thư mục `Cac_quan_an_da_luu/`
 File liên quan: `index.html`, `style.css`, `app.js`, `data.js`, `dish.png`,
 `dish-maskable.png`, `manifest.json`
 
 ---
 
-## Phần 1 — Bug ghi chú bị cắt sai (line-clamp)
+## Cấu trúc dữ liệu mỗi quán
 
-### Bối cảnh — 3 lần sửa trước đó đều chưa dứt điểm
+Mỗi quán là 1 object trong mảng `DATA` (`data.js`):
 
-- **Lần 1 — `max-height` (px) + `overflow:hidden`:** cắt ngang giữa dòng chữ (không
-  theo trọn dòng), nút "Xem thêm" đè chồng lên chữ bị cắt dở.
-- **Lần 2 — `-webkit-line-clamp` với số dòng tính động từ `branchCell.offsetHeight`:**
-  ghi chú của TẤT CẢ các hàng đều bị cắt còn 1 dòng, kể cả hàng có cột "Chi nhánh"
-  rất cao (đáng lẽ phải hiện đầy đủ).
-- **Lần 3 — đo `div.branch-list` bên trong thay vì đo `<td>`:** vẫn lỗi y hệt lần 2.
-  Đã loại trừ khả năng do trình duyệt tích hợp (lỗi vẫn xảy ra trên Chrome thường
-  qua link GitHub Pages live).
+```js
+{
+  name: "Tên quán",
+  category: "Tên category (hiển thị trên UI, vd: Hủ tiếu, Trà sữa...)",
+  badge: "class-css-badge-tuong-ung",
+  branches: [
+    { label: "", address: "địa chỉ", hours: "giờ mở cửa", phone: "SĐT (nếu có)" }
+    // có thể thêm nhiều object nữa nếu quán có nhiều chi nhánh
+  ],
+  note: "Ghi chú/nhận xét về quán, món đặc trưng, giá tham khảo..."
+}
+```
 
-### Nguyên nhân thật (xác nhận bằng Chromium thật, đo trực tiếp số liệu)
+- `branches` luôn là mảng — 1 chi nhánh vẫn phải để trong `[ ]`.
+- `badge` phải khớp với 1 class `.badge-xxx{...}` khai báo trong `style.css`. Category
+  mới → cần tạo badge mới (chọn màu chưa dùng, tránh trùng với badge khác).
 
-Logic JS tính `targetHeight`/`naturalLines`/`maxLines` **hoàn toàn đúng** — hướng đo
-của lần 3 không hề sai. Bug nằm ở `style.css`: rule mặc định áp dụng cho **mọi** kích
-thước màn hình (không nằm trong `@media max-width:700px`):
+**Danh sách category/badge tính đến hiện tại:**
+
+| Category | Badge class | Ghi chú |
+|---|---|---|
+| Buffet | `badge-buffet` | có sẵn từ trước |
+| Ăn vặt | `badge-vat` | có sẵn từ trước |
+| Gà Hàn | `badge-ga` | có sẵn từ trước |
+| Cơm gà | `badge-com-ga` | có sẵn từ trước |
+| Bún | `badge-bun` | có sẵn từ trước |
+| Cháo | `badge-chao` | có sẵn từ trước |
+| Chè | `badge-che` | có sẵn từ trước |
+| Bingsu | `badge-bingsu` | có sẵn từ trước |
+| Hủ tiếu | `badge-hu-tieu` | badge mới |
+| Xíu mại | `badge-xiu-mai` | badge mới |
+| Hủ tiếu Mì | `badge-hu-tieu-mi` | badge mới, riêng cho quán bán cả 2 loại |
+| Trà sữa | `badge-tra-sua` | đổi tên từ `badge-tra` |
+| Mì | `badge-mi` | badge mới, tạo sẵn, chưa có quán nào dùng |
+
+---
+
+## Bug ghi chú bị cắt sai (line-clamp)
+
+**Nguyên nhân:** `style.css` có rule mặc định áp dụng cho **mọi** kích thước màn
+hình (không nằm trong `@media max-width:700px`):
 
 ```css
 .note-text{
@@ -34,14 +60,12 @@ thước màn hình (không nằm trong `@media max-width:700px`):
 }
 ```
 
-Khi `app.js` tính ra ghi chú **đủ ngắn, không cần cắt**, code chỉ reset style inline
-về `""` — rơi lại đúng vào rule CSS mặc định ở trên. Vì nhánh `if` không chạy nên nút
-"Xem thêm" cũng không được thêm → ghi chú bị cắt câm lặng, không cách nào mở ra.
+Khi `app.js` tính ra ghi chú đủ ngắn (không cần cắt), code chỉ reset style inline về
+`""` — rơi lại đúng vào rule CSS mặc định ở trên. Nhánh `if` không chạy nên nút "Xem
+thêm" cũng không được thêm → ghi chú bị cắt câm lặng, không cách nào mở ra.
 
-### Cách sửa
-
-Thêm nhánh `else` set **tường minh** trạng thái "hiện đầy đủ" thay vì để nó rơi về
-CSS mặc định:
+**Cách sửa:** thêm nhánh `else` set tường minh trạng thái "hiện đầy đủ" thay vì để
+rơi về CSS mặc định:
 
 ```js
 const showFull = () => {
@@ -62,16 +86,12 @@ if(naturalLines > maxLines){
 Đồng thời tách riêng phần reset của nhánh mobile (vẫn cần dựa đúng vào CSS mặc định
 `clamp:1`) khỏi nhánh desktop, để hai nhánh không giẫm lên nhau.
 
-**Đã kiểm chứng:** dựng lại trang bằng Chromium thật (headless), đo trực tiếp
-`offsetHeight`/`scrollHeight`/`computedClamp` cho từng hàng — hàng có cột "Chi
-nhánh" cao (nhiều chi nhánh) hiện đầy đủ ghi chú, các hàng cần cắt vẫn cắt đúng +
-có nút.
-
 ---
 
-## Phần 2 — Bug nút "Xem thêm" bấm không phản ứng
+## Bug nút "Xem thêm" bấm không phản ứng
 
-**Triệu chứng:** sau khi sửa Phần 1, có lúc bấm nút "Xem thêm" không mở ra gì cả.
+**Triệu chứng:** sau khi sửa bug line-clamp, có lúc bấm nút "Xem thêm" không mở ra
+gì cả.
 
 **Nguyên nhân:** `initNoteToggles()` được gọi lại mỗi khi có sự kiện `resize`:
 
@@ -91,23 +111,17 @@ listener mới**, không hề gỡ listener cũ. Nếu tổng số listener là 
 **Cách sửa:** đổi `btn.addEventListener("click", fn)` → `btn.onclick = fn` ở cả 2
 nhánh (mobile & desktop). Gán `onclick` luôn **ghi đè** handler cũ thay vì cộng dồn.
 
-**Đã kiểm chứng:** mô phỏng 6 lần gọi `initNoteToggles()` liên tiếp (giả lập resize
-dồn dập) rồi bấm mở/đóng nhiều lần — hoạt động đúng cả hai chiều.
-
 ---
 
-## Phần 3 — Các quyết định về hạ tầng
+## Các quyết định về hạ tầng
 
 ### Database ngoài — quyết định: không cần
 
-Lý do ban đầu cân nhắc: sợ mỗi lần push commit mới thì GitHub phải build lại page,
-page có bị dừng/gián đoạn không.
-
-**Kết luận:** GitHub Pages deploy theo kiểu **atomic** — bản cũ vẫn tiếp tục phục
-vụ bình thường trong lúc build bản mới; chỉ khi build xong mới swap sang bản mới.
-Nếu build lỗi, trang vẫn giữ nguyên bản deploy thành công gần nhất, không bao giờ
-"sập" giữa chừng. → Sửa `data.js` và commit trực tiếp hoàn toàn an toàn, không có
-rủi ro downtime. Giữ nguyên cách lưu data hiện tại, không cần Supabase/Firebase/
+GitHub Pages deploy theo kiểu **atomic** — bản cũ vẫn tiếp tục phục vụ bình thường
+trong lúc build bản mới; chỉ khi build xong mới swap sang bản mới. Nếu build lỗi,
+trang vẫn giữ nguyên bản deploy thành công gần nhất, không bao giờ "sập" giữa
+chừng. → Sửa `data.js` và commit trực tiếp hoàn toàn an toàn, không có rủi ro
+downtime. Giữ nguyên cách lưu data hiện tại, không cần Supabase/Firebase/
 Airtable/Google Sheets API.
 
 *(Dung lượng GitHub: file đơn lẻ chặn cứng ở 100MB, repo khuyến nghị dưới ~1GB —
@@ -123,10 +137,10 @@ chỉ có light mode.
 ### Nếu mở rộng sang loại cửa hàng khác (karaoke, v.v.)
 
 Vì mỗi loại có thông tin khác nhau nhiều, quyết định: **copy riêng từng dự án**
-thay vì dùng chung `app.js`/`style.css`. Lưu ý: nếu copy sau khi đã fix Phần 1 & 2,
-bug đã fix rồi; nhưng nếu sau này sửa lại `initNoteToggles()` độc lập ở bản copy,
-có thể vô tình đưa lại 1 trong 2 bug cũ — nên giữ file tổng hợp này trong mỗi bản
-copy làm cheat-sheet tham khảo.
+thay vì dùng chung `app.js`/`style.css`. Lưu ý: nếu copy sau khi đã fix 2 bug ở
+trên, bug đã fix rồi; nhưng nếu sau này sửa lại `initNoteToggles()` độc lập ở bản
+copy, có thể vô tình đưa lại 1 trong 2 bug cũ — nên giữ file tổng hợp này trong
+mỗi bản copy làm cheat-sheet tham khảo.
 
 ### Repo public — nhận đóng góp từ người khác
 
@@ -171,7 +185,7 @@ giới hạn kỹ thuật.
 
 ---
 
-## Phần 4 — Favicon
+## Favicon & PWA icon (maskable)
 
 Icon dùng: [Dish icon — Pause08, Flaticon](https://www.flaticon.com/free-icon/dish_857718)
 (free, yêu cầu credit tác giả nếu không mua Premium).
@@ -185,81 +199,31 @@ ngay sau `<title>`:
 ```
 
 - `rel="icon"` → favicon tab trình duyệt, Android cũng tự đọc để hiện icon khi
-  "Thêm vào màn hình chính" (đã test, hoạt động).
+  "Thêm vào màn hình chính".
 - `rel="apple-touch-icon"` → **bắt buộc riêng** cho iOS/Safari — Safari không đọc
   `rel="icon"` khi tạo lối tắt màn hình chính trên iPhone; thiếu dòng này iPhone sẽ
   tự chụp ảnh trang hoặc hiện chữ cái đầu thay vì icon.
 - Dùng ảnh 512px chung cho cả 2 thẻ, trình duyệt tự scale khi cần.
-- Chưa làm `manifest.json` — chỉ cần khi muốn trang hoạt động như app thật (tên
-  riêng, splash screen...), không bắt buộc chỉ để hiện icon.
 
 **Credit tác giả** (dán vào `<footer>` trong `index.html`):
 
 ```html
 <footer class="text-center small mt-4">
-  Nhấn vào tiêu đề cột để sắp xếp · Nguồn: OpenSourceToShare
+  Nhấn vào tiêu đề cột để sắp xếp · Nguồn: TranThaiHoaPersonalDirectories
   <br>
   <a href="https://www.flaticon.com/free-icon/dish_857718" title="dish icon" target="_blank" rel="noopener">Dish icon created by Pause08 - Flaticon</a>
 </footer>
 ```
 
----
-
-## Phần 5 — Chuyển repo sang Private, ảnh hưởng GitHub Pages
-
-**Câu hỏi:** nếu để repo private thì trang GitHub Pages có còn hoạt động không?
-
-- **GitHub Free** (miễn phí): Pages **chỉ hoạt động với repo public**. Chuyển sang
-  private → trang đã publish **tự động unpublish** → link 404, trang sập hẳn.
-- **GitHub Pro** trở lên: có thể bật Pages cho repo private, nhưng **"repo
-  private" ≠ "trang web private"** — trang build ra vẫn công khai với bất kỳ ai có
-  link, chỉ mã nguồn trên GitHub bị giấu (vẫn xem được qua "View Page Source" khi
-  mở trang).
-- Muốn giới hạn hẳn ai được xem trang → cần GitHub Enterprise Cloud, không hợp dự
-  án cá nhân.
-
-**Kết luận:** dùng Free thì không nên chuyển private nếu còn muốn trang chạy. Muốn
-vừa giấu code vừa giữ trang public → cần GitHub Pro. Muốn giấu hẳn cả trang khỏi
-người ngoài → GitHub Pages (kể cả Pro) không làm được, cần đổi hosting có hỗ trợ
-auth.
-
----
-
-## Phần 6 — Đổi tên repo: `OpenSourceToShare` → `TranThaiHoaPersonalDirectories`
-
-**Lý do:** tên cũ `OpenSourceToShare` dễ gây nhầm — nghe như 1 repo tổng hợp/curate
-danh sách các dự án mã nguồn mở khác, trong khi nội dung thật là các mini-app cá
-nhân (danh sách quán ăn, sau này có thể thêm karaoke...).
-
-**Cách đổi:** GitHub → repo → Settings → General → sửa "Repository name" → Rename.
-GitHub tự tạo redirect từ tên cũ sang tên mới (cả repo lẫn Pages), link cũ ai đã
-lưu vẫn dùng được, không sợ 404 ngay. Trên máy local cần cập nhật lại remote:
-```bash
-git remote set-url origin https://github.com/TranThaiHoa0409/TranThaiHoaPersonalDirectories.git
-```
-Không cần sửa gì trong code (`index.html`/`app.js`/`data.js`) vì không có chỗ nào
-hardcode tên repo, chỉ dùng đường dẫn tương đối.
-
-**URL Pages mới:**
-```
-https://tranthaihoa0409.github.io/TranThaiHoaPersonalDirectories/Cac_quan_an_da_luu/
-```
-
-Đã cập nhật theo tên mới ở: `README.md` (tiêu đề, badge link, link trực tiếp) và
-`<footer>` trong `index.html` (dòng "Nguồn: ...").
-
----
-
-## Phần 7 — Icon shortcut màn hình chính bị viền trắng (PWA maskable icon)
+### Vấn đề: icon shortcut màn hình chính bị viền trắng (adaptive icon Android)
 
 **Triệu chứng:** thêm shortcut "Sổ Quán Ăn" vào màn hình chính Android, icon hiện
 ra có khung nền trắng bao quanh thay vì nền trong theme, nhìn lệch tông với các
 icon app khác.
 
-**Nguyên nhân:** đây không phải do favicon/CSS của trang web, mà do cách Android
-tự "đóng gói" icon thành *adaptive icon* khi không có khai báo icon chuẩn — icon
-gốc (`dish.png`) không phủ kín hết viền vuông (full-bleed), nên hệ thống tự tô
-thêm nền trắng quanh phần trống.
+**Nguyên nhân:** Android tự "đóng gói" icon thành *adaptive icon* khi không có
+khai báo icon chuẩn — icon gốc (`dish.png`) không phủ kín hết viền vuông
+(full-bleed), nên hệ thống tự tô thêm nền trắng quanh phần trống.
 
 **Cách sửa:** thêm Web App Manifest để khai báo icon đúng chuẩn, gồm 1 bản
 "maskable" (full-bleed, icon nằm trong safe-zone hình tròn ở giữa).
@@ -294,6 +258,3 @@ safe-zone hình tròn), xuất PNG, đặt cùng thư mục với `dish.png`.
 trên web không tự cập nhật shortcut cũ. Sau khi push bản mới, phải **xoá shortcut
 cũ trên màn hình chính rồi thêm lại** (Chrome → "Thêm vào màn hình chính") mới
 thấy nền đổi đúng.
-
-**Đã xác nhận:** kiểm tra `dish-maskable.png` trong VS Code — nền be phủ kín toàn
-bộ khung 512×512, không có phần trong suốt, icon nằm gọn trong vùng an toàn.
