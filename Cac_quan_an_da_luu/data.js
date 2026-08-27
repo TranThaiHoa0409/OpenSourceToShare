@@ -193,5 +193,13 @@ const DATA = [
       { label: "", address: "71c Nguyễn Thị Minh Khai, P. Bến Thành, Quận 1", hours: "06:00–21:00", phone: "0919 777 703" }
     ],
     note: "Quán chay rộng rãi, có máy lạnh, thực đơn đa dạng. Đặc biệt có bánh mì chay. Có bán mang về. Giá trung bình khoảng 100k/người."
+  },
+  {
+    name: "Quán chay Thôi Kệ",
+    categories: ["Chay"],
+    branches: [
+      { label: "", address: "727 Lê Hồng Phong, P. Hòa Hưng, Quận 10", hours: "07:00–20:00", phone: "0946 595 573" }
+    ],
+    note: "Quán chay lâu năm, không gian rộng rãi thoáng mát, thực đơn đa dạng lên đến 70 món. Nổi bật hủ tiếu bò kho chay (35–42k), bún Thái, bánh xèo, bánh mì. Có bán mang về."
   }
 ];
