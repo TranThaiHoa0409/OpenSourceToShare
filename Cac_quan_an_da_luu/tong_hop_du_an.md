@@ -59,40 +59,16 @@ const BADGE_MAP = {
   "Mì": "badge-mi",
   "Hủ tiếu": "badge-hu-tieu",
   "Xíu mại": "badge-xiu-mai",
-  "Bánh mì": "badge-banh-mi"
+  "Bánh mì": "badge-banh-mi",
+  "Cơm": "badge-com",
+  "Chay": "badge-chay",
+  "Trà trái cây": "badge-tra-trai-cay",
 };
 ```
 
 Nếu gặp category chưa khai báo trong map, `badgeFor()` fallback về
 `badge-vat` (không sập trang, nhưng badge sẽ trùng màu "Ăn vặt" — nên luôn
 khai báo đủ khi thêm category mới).
-
-**Danh sách category/badge tính đến hiện tại:**
-
-| Category | Badge class | Ghi chú |
-|---|---|---|
-| Buffet | `badge-buffet` | |
-| Ăn vặt | `badge-vat` | cũng là badge fallback mặc định |
-| Gà Hàn | `badge-ga` | |
-| Trà sữa | `badge-tra-sua` | |
-| Cơm | `badge-com` | badge có sẵn từ trước, mới đưa vào `BADGE_MAP` |
-| Cơm gà | `badge-com-ga` | |
-| Bún | `badge-bun` | |
-| Cháo | `badge-chao` | |
-| Chè | `badge-che` | |
-| Phở | `badge-pho` | |
-| Bingsu | `badge-bingsu` | |
-| Mì | `badge-mi` | |
-| Hủ tiếu | `badge-hu-tieu` | |
-| Xíu mại | `badge-xiu-mai` | |
-| Bánh mì | `badge-banh-mi` | badge mới |
-| Chay | `badge-chay` | badge mới, dành cho đồ chay |
-| Trà trái cây | `badge-tra-trai-cay` | badge mới |
-
-**Đã xoá:** `badge-hu-tieu-mi` (dùng riêng cho category gộp "Hủ tiếu Mì"). Quán
-từng dùng badge này ("Hủ Tiếu Mì Gia - A Hòa") giờ khai báo
-`categories: ["Hủ tiếu", "Mì"]` — tự hiện 2 badge riêng (`badge-hu-tieu` +
-`badge-mi`) thay vì 1 badge gộp.
 
 ---
 
