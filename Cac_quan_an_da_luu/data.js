@@ -193,5 +193,14 @@ const DATA = [
       { label: "", address: "95 Phan Văn Trị, P. Chợ Quán", hours: "06:00–21:30", phone: "0908 274 112" }
     ],
     note: "Bán cả nước lẫn khô, đa dạng combo với sườn/hoành thánh. Nước lèo thanh nhẹ, được lòng khách quen ăn nhiều lần. Giá dao động 45.000–85.000đ tùy món."
+  },
+  {
+    name: "Bin Bin - Milktea Tea",
+    category: "Trà sữa",
+    badge: "badge-tra-sua",
+    branches: [
+      { label: "", address: "1 Nguyễn Thị Thập, P. Tân Hưng, Quận 7 (xe đẩy, ngay cạnh quán dê nướng)", hours: "Buổi tối", phone: "0908 557 762" }
+    ],
+    note: "Xe trà sữa/trà trái cây lưu động, menu đa dạng. Giá dao động từ 25-32k. Vị trí bán cố định ngay cạnh quán dê nướng."
   }
 ];
