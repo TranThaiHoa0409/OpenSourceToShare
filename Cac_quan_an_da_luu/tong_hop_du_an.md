@@ -49,7 +49,6 @@ const BADGE_MAP = {
   "Ăn vặt": "badge-vat",
   "Gà Hàn": "badge-ga",
   "Trà sữa": "badge-tra-sua",
-  "Cơm": "badge-com",
   "Cơm gà": "badge-com-ga",
   "Bún": "badge-bun",
   "Cháo": "badge-chao",

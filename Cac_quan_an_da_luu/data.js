@@ -48,7 +48,7 @@ const DATA = [
       { label: "Tân Bình", address: "28 Trương Công Định, P.14, Quận Tân Bình", hours: "10:30–22:00", phone: "" },
       { label: "Gò Vấp", address: "699 Phan Văn Trị, P.1, Quận Gò Vấp", hours: "10:30–22:00", phone: "0938 115 428" }
     ],
-    note: "Chuỗi quán gà rán/gà phô mai kiểu Hàn Quốc, nổi bật với món gà phô mai \"signature\", ngoài ra có mì lạnh, mì tương đen, gà sốt cay, khoai tây lắc phô mai. Giá trung bình khoảng 120.000 – 150.000đ/người."
+    note: "Chuỗi quán gà rán/gà phô mai kiểu Hàn Quốc, nổi bật với món gà phô mai \"signature\", ngoài ra có mì lạnh, mì tương đen, gà sốt cay, khoai tây lắc phô mai. Giá trung bình khoảng 120k – 150k/người."
   },
   {
     name: "Cơm gà xối mỡ Thanh",
@@ -152,7 +152,7 @@ const DATA = [
     branches: [
       { label: "", address: "55 Phong Phú, P. Phú Định, Quận 8", hours: "15:30–23:30", phone: "" }
     ],
-    note: "Xá xíu ngon xuất sắc, ăn khô cũng rất đã. Giá khoảng 42.000–55.000đ/tô. Quán lâu năm quen thuộc với người dân khu vực, không gian nhỏ hơi ngột ngạt."
+    note: "Xá xíu ngon xuất sắc, ăn khô cũng rất đã. Giá khoảng 42k–55k/tô. Quán lâu năm quen thuộc với người dân khu vực, không gian nhỏ hơi ngột ngạt."
   },
   {
     name: "Hủ Tiếu Da Gà",
@@ -168,7 +168,7 @@ const DATA = [
     branches: [
       { label: "", address: "47 Đ. số 9A, KDC Trung Sơn, Bình Hưng", hours: "16:00–04:00", phone: "0939 100 789" }
     ],
-    note: "Không gian trẻ trung, sạch sẽ, rộng rãi, hợp cả ăn một mình lẫn nhóm nhỏ. Xíu mại nóng hổi, nước lèo thanh nhẹ. Giá khoảng 30.000đ/người (kèm bánh mì)."
+    note: "Không gian trẻ trung, sạch sẽ, rộng rãi, hợp cả ăn một mình lẫn nhóm nhỏ. Xíu mại nóng hổi, nước lèo thanh nhẹ. Giá khoảng 30k/người (kèm bánh mì)."
   },
   {
     name: "Hủ Tiếu Mì Gia - A Hòa",
@@ -176,7 +176,7 @@ const DATA = [
     branches: [
       { label: "", address: "95 Phan Văn Trị, P. Chợ Quán", hours: "06:00–21:30", phone: "0908 274 112" }
     ],
-    note: "Bán cả nước lẫn khô, đa dạng combo với sườn/hoành thánh. Nước lèo thanh nhẹ, được lòng khách quen ăn nhiều lần. Giá dao động 45.000–85.000đ tùy món."
+    note: "Bán cả nước lẫn khô, đa dạng combo với sườn/hoành thánh. Nước lèo thanh nhẹ, được lòng khách quen ăn nhiều lần. Giá dao động 45k–85k tùy món."
   },
   {
     name: "Bin Bin - Milktea Tea",
@@ -185,5 +185,13 @@ const DATA = [
       { label: "", address: "1 Nguyễn Thị Thập, P. Tân Hưng, Quận 7 (xe đẩy, ngay cạnh quán dê nướng)", hours: "Buổi tối", phone: "0908 557 762" }
     ],
     note: "Xe trà sữa/trà trái cây lưu động, menu đa dạng. Giá dao động từ 25-32k. Vị trí bán cố định ngay cạnh quán dê nướng."
+  },
+  {
+    name: "Quán chay Sala",
+    categories: ["Chay", "Bánh mì"],
+    branches: [
+      { label: "", address: "71c Nguyễn Thị Minh Khai, P. Bến Thành, Quận 1", hours: "06:00–21:00", phone: "0919 777 703" }
+    ],
+    note: "Quán chay rộng rãi, có máy lạnh, thực đơn đa dạng. Đặc biệt có bánh mì chay. Có bán mang về. Giá trung bình khoảng 100k/người."
   }
 ];
