@@ -156,6 +156,12 @@ h1{
 .branch-phone{ font-weight:500; color:var(--ink-soft); margin-left:2px; }
 
 /* ---------- Badges (Bootstrap .badge + màu riêng theo loại quán) ---------- */
+.badge-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px;
+}
+
 .badge-buffet{ background:#EFE1C4; color:#7A5A16; }
 .badge-vat{ background:#E4E9F6; color:#2F4C8C; }
 .badge-ga{ background:#FBE1D8; color:var(--lacquer-dark); }
@@ -170,7 +176,8 @@ h1{
 .badge-mi{ background:#FBE8D3; color:#9A5B12; }
 .badge-hu-tieu{ background:#F7DCD4; color:#9C4A2E; }
 .badge-xiu-mai{ background:#F1E4D6; color:#7A4A22; }
-.badge-hu-tieu-mi{ background:#E6E1EC; color:#4A3F66; }
+.badge-banh-mi{ background:#EFEAD1; color:#6B6B1F; }
+.badge-chay{ background:#E2EDD9; color:#3E6B2B; }
 
 /* ---------- Ghi chú: giới hạn 3 dòng, có nút "Xem thêm" ---------- */
 .note{

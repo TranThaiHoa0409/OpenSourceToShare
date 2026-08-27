@@ -6,8 +6,7 @@
 // Cấu trúc mỗi quán:
 // {
 //   name: "Tên quán",
-//   category: "Loại quán"  (vd: Buffet, Ăn vặt, Gà Hàn, Trà sữa...),
-//   badge: "badge-xxx"     (class màu cho nhãn loại quán, xem style.css)
+//   categories: ["Loại quán 1", "Loại quán 2", ...]  (1 quán có thể thuộc nhiều loại)
 //   branches: [
 //     { label: "Tên chi nhánh (có thể để trống \"\")",
 //       address: "Địa chỉ",
@@ -16,13 +15,16 @@
 //   ],
 //   note: "Ghi chú về quán, món ăn nổi bật, giá cả, không gian..."
 // }
+//
+// Màu badge cho từng "Loại quán" được khai báo trong app.js (BADGE_MAP).
+// Category mới -> nhớ thêm 1 dòng vào BADGE_MAP (app.js) + 1 class
+// .badge-xxx tương ứng trong style.css.
 // ============================================================
 
 const DATA = [
   {
     name: "Buffet 79k Hương Việt",
-    category: "Buffet",
-    badge: "badge-buffet",
+    categories: ["Buffet"],
     branches: [
       { label: "CN1", address: "22 Tân Quý, Quận Tân Phú", hours: "15:00–22:00", phone: "" },
       { label: "CN2", address: "644 Nguyễn Văn Quá, Quận 12", hours: "15:00–21:00", phone: "" }
@@ -31,8 +33,7 @@ const DATA = [
   },
   {
     name: "Kim Cherry",
-    category: "Ăn vặt",
-    badge: "badge-vat",
+    categories: ["Ăn vặt"],
     branches: [
       { label: "", address: "53 Nguyễn Trãi, P. Chợ Quán, Q.5 (đối diện ĐH Sài Gòn)", hours: "08:00–22:00", phone: "" }
     ],
@@ -40,8 +41,7 @@ const DATA = [
   },
   {
     name: "Kokoria – Chicken & Cheese",
-    category: "Gà Hàn",
-    badge: "badge-ga",
+    categories: ["Gà Hàn"],
     branches: [
       { label: "Sư Vạn Hạnh", address: "573/2 Sư Vạn Hạnh, P.12, Quận 10", hours: "10:30–22:00", phone: "" },
       { label: "Lê Văn Duyệt", address: "106 Lê Văn Duyệt, P.1, Quận Bình Thạnh", hours: "10:30–22:00", phone: "0909 407 981" },
@@ -52,8 +52,7 @@ const DATA = [
   },
   {
     name: "Cơm gà xối mỡ Thanh",
-    category: "Cơm gà",
-    badge: "badge-com-ga",
+    categories: ["Cơm gà"],
     branches: [
       { label: "", address: "Hẻm 214 Nguyễn Trãi, P.2, Quận 5", hours: "15:00–23:00", phone: "" }
     ],
@@ -61,8 +60,7 @@ const DATA = [
   },
   {
     name: "Bún Thang Cậu Ba",
-    category: "Bún",
-    badge: "badge-bun",
+    categories: ["Bún"],
     branches: [
       { label: "", address: "829 Trần Hưng Đạo, P.1, Quận 5", hours: "06:00–15:00", phone: "" }
     ],
@@ -70,8 +68,7 @@ const DATA = [
   },
   {
     name: "Cá Viên Chiên Anh Mỹ",
-    category: "Ăn vặt",
-    badge: "badge-vat",
+    categories: ["Ăn vặt"],
     branches: [
       { label: "", address: "81 Nguyễn Thái Học, P. Cầu Ông Lãnh, Quận 1", hours: "15:30–00:00", phone: "" }
     ],
@@ -79,8 +76,7 @@ const DATA = [
   },
   {
     name: "Geylang By 9",
-    category: "Cháo",
-    badge: "badge-chao",
+    categories: ["Cháo"],
     branches: [
       { label: "", address: "25 Cô Bắc, P. Cầu Ông Lãnh, Quận 1", hours: "16:00–03:00", phone: "0906 776 194" }
     ],
@@ -88,8 +84,7 @@ const DATA = [
   },
   {
     name: "Cacao Dừa 136",
-    category: "Ăn vặt",
-    badge: "badge-vat",
+    categories: ["Ăn vặt"],
     branches: [
       { label: "", address: "136/1 Nguyễn Tri Phương, P.9, Quận 5 (hẻm đối diện trường Trần Khai Nguyên)", hours: "08:00–22:00", phone: "0938 845 359" }
     ],
@@ -97,8 +92,7 @@ const DATA = [
   },
   {
     name: "Chè Cô Giang",
-    category: "Chè",
-    badge: "badge-che",
+    categories: ["Chè"],
     branches: [
       { label: "", address: "85 Cô Giang, P. Cầu Ông Lãnh, Quận 1", hours: "15:00–22:00", phone: "" }
     ],
@@ -106,8 +100,7 @@ const DATA = [
   },
   {
     name: "Bingsu Cafe (BingBing)",
-    category: "Bingsu",
-    badge: "badge-bingsu",
+    categories: ["Bingsu"],
     branches: [
       { label: "", address: "283/72 Cách Mạng Tháng Tám, Quận 10", hours: "10:30–23:30", phone: "0704 412 082" }
     ],
@@ -115,8 +108,7 @@ const DATA = [
   },
   {
     name: "Bún Bò Huế Cô Ân",
-    category: "Bún",
-    badge: "badge-bun",
+    categories: ["Bún"],
     branches: [
       { label: "", address: "331/10 Đ. Nguyễn Thiện Thuật, P. Bàn Cờ", hours: "24/24", phone: "028 3833 2806" }
     ],
@@ -124,8 +116,7 @@ const DATA = [
   },
   {
     name: "Bún Thịt Nướng Chả Giò - Nguyễn Trung Trực",
-    category: "Bún",
-    badge: "badge-bun",
+    categories: ["Bún"],
     branches: [
       { label: "", address: "1 Nguyễn Trung Trực, P. Bến Thành", hours: "06:00–20:30", phone: "0909 139 017" }
     ],
@@ -133,8 +124,7 @@ const DATA = [
   },
   {
     name: "Coconino Phan Văn Trị",
-    category: "Bingsu",
-    badge: "badge-bingsu",
+    categories: ["Bingsu"],
     branches: [
       { label: "", address: "127 Phan Văn Trị, P. Chợ Quán", hours: "13:00–22:00", phone: "0899 505 565" }
     ],
@@ -142,8 +132,7 @@ const DATA = [
   },
   {
     name: "Chè Tang Chao 華人甜品店",
-    category: "Chè",
-    badge: "badge-che",
+    categories: ["Chè"],
     branches: [
       { label: "", address: "249a Lê Hồng Phong, P. Chợ Quán", hours: "12:30–22:30", phone: "0838 312 168" }
     ],
@@ -151,8 +140,7 @@ const DATA = [
   },
   {
     name: "Quán cơm Bento Dino - Bùi Thị Xuân",
-    category: "Cơm gà",
-    badge: "badge-com-ga",
+    categories: ["Cơm gà"],
     branches: [
       { label: "", address: "134/3/1 Bùi Thị Xuân, P. Bến Thành, Quận 1", hours: "09:00–14:00", phone: "0903 384 231" }
     ],
@@ -160,8 +148,7 @@ const DATA = [
   },
   {
     name: "Hủ Tíu Xá Xíu Hoành Thánh",
-    category: "Hủ tiếu",
-    badge: "badge-hu-tieu",
+    categories: ["Hủ tiếu"],
     branches: [
       { label: "", address: "55 Phong Phú, P. Phú Định, Quận 8", hours: "15:30–23:30", phone: "" }
     ],
@@ -169,8 +156,7 @@ const DATA = [
   },
   {
     name: "Hủ Tiếu Da Gà",
-    category: "Hủ tiếu",
-    badge: "badge-hu-tieu",
+    categories: ["Hủ tiếu"],
     branches: [
       { label: "", address: "43 Vĩnh Nam, P. Phú Định, Quận 8", hours: "06:30–21:00", phone: "0919 357 904" }
     ],
@@ -178,8 +164,7 @@ const DATA = [
   },
   {
     name: "Xíu Mại Chén Chú IT",
-    category: "Xíu mại",
-    badge: "badge-xiu-mai",
+    categories: ["Xíu mại"],
     branches: [
       { label: "", address: "47 Đ. số 9A, KDC Trung Sơn, Bình Hưng", hours: "16:00–04:00", phone: "0939 100 789" }
     ],
@@ -187,8 +172,7 @@ const DATA = [
   },
   {
     name: "Hủ Tiếu Mì Gia - A Hòa",
-    category: "Hủ tiếu Mì",
-    badge: "badge-hu-tieu-mi",
+    categories: ["Hủ tiếu", "Mì"],
     branches: [
       { label: "", address: "95 Phan Văn Trị, P. Chợ Quán", hours: "06:00–21:30", phone: "0908 274 112" }
     ],
@@ -196,8 +180,7 @@ const DATA = [
   },
   {
     name: "Bin Bin - Milktea Tea",
-    category: "Trà sữa",
-    badge: "badge-tra-sua",
+    categories: ["Trà sữa"],
     branches: [
       { label: "", address: "1 Nguyễn Thị Thập, P. Tân Hưng, Quận 7 (xe đẩy, ngay cạnh quán dê nướng)", hours: "Buổi tối", phone: "0908 557 762" }
     ],

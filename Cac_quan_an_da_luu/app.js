@@ -15,7 +15,31 @@ function normalizeVN(str){
     .trim();
 }
 
-const CATEGORIES = ["Tất cả", ...Array.from(new Set(DATA.map(d => d.category)))];
+// Tra badge class theo tên category — thêm category mới ở đây khi cần,
+// nhớ tạo class .badge-xxx tương ứng trong style.css.
+const BADGE_MAP = {
+  "Buffet": "badge-buffet",
+  "Ăn vặt": "badge-vat",
+  "Gà Hàn": "badge-ga",
+  "Trà sữa": "badge-tra-sua",
+  "Cơm gà": "badge-com-ga",
+  "Bún": "badge-bun",
+  "Cháo": "badge-chao",
+  "Chè": "badge-che",
+  "Phở": "badge-pho",
+  "Bingsu": "badge-bingsu",
+  "Mì": "badge-mi",
+  "Hủ tiếu": "badge-hu-tieu",
+  "Xíu mại": "badge-xiu-mai",
+  "Bánh mì": "badge-banh-mi",
+  "Cơm": "badge-com",
+  "Chay": "badge-chay",
+};
+function badgeFor(cat){
+  return BADGE_MAP[cat] || "badge-vat"; // fallback nếu quên khai báo màu
+}
+
+const CATEGORIES = ["Tất cả", ...Array.from(new Set(DATA.flatMap(d => d.categories)))];
 
 let state = { category: "Tất cả", query: "", sortKey: "name", sortDir: 1 };
 
@@ -36,13 +60,13 @@ function renderTabs(){
 }
 
 function getFiltered(){
-  let rows = DATA.filter(r => state.category === "Tất cả" || r.category === state.category);
+  let rows = DATA.filter(r => state.category === "Tất cả" || r.categories.includes(state.category));
   if(state.query.trim()){
     const q = normalizeVN(state.query);
     rows = rows.filter(r => {
       const haystack = [
         r.name,
-        r.category,
+        ...r.categories,
         r.note,
         ...r.branches.map(b => b.label),
         ...r.branches.map(b => b.address)
@@ -54,6 +78,8 @@ function getFiltered(){
     let av, bv;
     if(state.sortKey === "address"){
       av = a.branches[0].address; bv = b.branches[0].address;
+    } else if(state.sortKey === "category"){
+      av = a.categories.join(", "); bv = b.categories.join(", ");
     } else {
       av = (a[state.sortKey] || "").toString();
       bv = (b[state.sortKey] || "").toString();
@@ -86,11 +112,14 @@ function renderTable(){
           </div>
         </div>
       `).join("");
+      const badgeBlocks = r.categories.map(cat =>
+        `<span class="badge rounded-pill ${badgeFor(cat)}">${cat}</span>`
+      ).join("");
       tr.innerHTML = `
         <td class="col-name">
           <span class="name-vn">${r.name}</span>
         </td>
-        <td><span class="badge rounded-pill ${r.badge}">${r.category}</span></td>
+        <td><div class="badge-list">${badgeBlocks}</div></td>
         <td data-label="Chi nhánh"><div class="branch-list">${branchBlocks}</div></td>
         <td class="note" data-label="Ghi chú">
           <div class="note-text">${r.note}</div>
@@ -112,16 +141,11 @@ function initNoteToggles(){
     const text = cell.querySelector(".note-text");
     const btn = cell.querySelector(".note-toggle");
 
-    // Reset phần chung (không đụng tới line-clamp ở đây — mỗi nhánh
-    // mobile/desktop bên dưới tự set clamp tường minh cho đúng ngữ cảnh).
     text.classList.remove("expanded");
     btn.classList.add("d-none");
     btn.textContent = "Xem thêm";
 
     if(isMobile){
-      // Mobile: dựa vào rule CSS mặc định .note-text{-webkit-line-clamp:1}.
-      // Xoá mọi style inline có thể còn sót lại từ lần đo desktop trước đó
-      // (ví dụ khi người dùng thu nhỏ cửa sổ), để quay lại đúng CSS mặc định.
       text.style.display = "";
       text.style.webkitBoxOrient = "";
       text.style.webkitLineClamp = "";
@@ -129,28 +153,16 @@ function initNoteToggles(){
 
       if(text.scrollHeight > text.clientHeight + 1){
         btn.classList.remove("d-none");
-        // Dùng onclick (không phải addEventListener) — initNoteToggles() có thể
-        // chạy lại nhiều lần trên CÙNG một nút (ví dụ mỗi lần resize), nếu dùng
-        // addEventListener thì listener sẽ cộng dồn: số lượng chẵn -> bấm 1 cái
-        // là mở-rồi-đóng ngay trong cùng 1 click, nhìn như nút không phản ứng gì.
         btn.onclick = () => {
           const expanded = text.classList.toggle("expanded");
           btn.textContent = expanded ? "Thu gọn" : "Xem thêm";
         };
       }
     } else {
-      // Desktop: chỉ giới hạn ghi chú nếu nó CAO HƠN cột "Chi nhánh" của
-      // cùng hàng — nếu hàng đã đủ chỗ (nhiều chi nhánh) thì hiện full luôn.
-      // Cắt theo SỐ DÒNG TRỌN VẸN (line-clamp), không cắt theo pixel để
-      // tránh cắt ngang giữa dòng chữ.
       const row = cell.closest("tr");
       const branchCell = row.children[2];
       if(!branchCell) return;
 
-      // Đo chiều cao thật của nội dung chi nhánh (div .branch-list),
-      // KHÔNG đo trực tiếp <td> — vì các ô trong cùng 1 hàng bảng HTML
-      // luôn tự kéo giãn cao bằng nhau, nên offsetHeight của <td> không
-      // phản ánh đúng nội dung thật, làm phép so sánh bị sai lệch.
       const branchList = branchCell.querySelector(".branch-list");
       const targetHeight = branchList ? branchList.offsetHeight : branchCell.offsetHeight;
       const naturalHeight = text.scrollHeight;
@@ -165,10 +177,6 @@ function initNoteToggles(){
         text.style.webkitLineClamp = lines;
         text.style.overflow = "hidden";
       };
-      // Trạng thái "hiện đầy đủ", set TƯỜNG MINH — không dựa vào việc
-      // reset style inline về "" (vì lúc đó CSS mặc định -webkit-line-clamp:1
-      // của .note-text vẫn còn hiệu lực và sẽ âm thầm cắt về 1 dòng, dù
-      // JS đã tính là không cần cắt gì cả — đây chính là bug gốc).
       const showFull = () => {
         text.style.display = "-webkit-box";
         text.style.webkitBoxOrient = "vertical";
@@ -179,8 +187,6 @@ function initNoteToggles(){
       if(naturalLines > maxLines){
         applyClamp(maxLines);
         btn.classList.remove("d-none");
-        // onclick thay vì addEventListener — cùng lý do như nhánh mobile ở trên:
-        // tránh cộng dồn listener khi initNoteToggles() chạy lại (resize...).
         btn.onclick = () => {
           const collapsed = text.style.webkitLineClamp !== "none" && text.style.webkitLineClamp !== "";
           if(collapsed){

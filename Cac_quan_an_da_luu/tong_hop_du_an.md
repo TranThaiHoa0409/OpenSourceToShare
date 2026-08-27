@@ -13,8 +13,7 @@ Mỗi quán là 1 object trong mảng `DATA` (`data.js`):
 ```js
 {
   name: "Tên quán",
-  category: "Tên category (hiển thị trên UI)",
-  badge: "class-css-badge-tuong-ung",
+  categories: ["Loại quán A", "Loại quán B"],  // 1 quán có thể thuộc NHIỀU loại
   branches: [
     { label: "", address: "địa chỉ", hours: "giờ mở cửa", phone: "SĐT (nếu có)" }
     // có thể thêm nhiều object nữa nếu quán có nhiều chi nhánh
@@ -23,27 +22,109 @@ Mỗi quán là 1 object trong mảng `DATA` (`data.js`):
 }
 ```
 
-- `branches` luôn là mảng — 1 chi nhánh vẫn phải để trong `[ ]`.
-- `badge` phải khớp với 1 class `.badge-xxx{...}` khai báo trong `style.css`. Category
-  mới → cần tạo badge mới (chọn màu chưa dùng, tránh trùng với badge khác).
+- `categories` **luôn là mảng**, kể cả khi quán chỉ thuộc 1 loại (vd:
+  `categories: ["Bún"]`). Thiếu ngoặc vuông sẽ làm cả trang lỗi trắng trang vì
+  code dùng `.includes()` / `.map()` trên trường này.
+- `branches` cũng luôn là mảng — 1 chi nhánh vẫn phải để trong `[ ]`.
+- **Không còn trường `badge` trong từng quán.** Màu badge được tra tự động theo
+  tên category, khai báo tập trung 1 chỗ duy nhất trong `app.js` (xem mục dưới).
+
+> ### Lịch sử: trước đây là `category` (string) + `badge` (string)
+> Bản đầu chỉ cho 1 quán thuộc 1 category, và mỗi quán tự khai báo `badge`
+> riêng — dẫn tới lặp code (nhiều quán cùng loại phải gõ lại đúng badge) và
+> không thể gắn 2 loại cho 1 quán bán nhiều món khác hệ (vd quán vừa bán hủ
+> tiếu vừa bán mì). Đã refactor sang `categories` (mảng) + tra badge tập trung
+> qua `BADGE_MAP` để giải quyết cả 2 vấn đề.
+
+---
+
+## Bảng màu badge (`BADGE_MAP` trong `app.js`)
+
+`app.js` tự tra class CSS theo tên category, không cần khai báo lặp lại trong
+`data.js`:
+
+```js
+const BADGE_MAP = {
+  "Buffet": "badge-buffet",
+  "Ăn vặt": "badge-vat",
+  "Gà Hàn": "badge-ga",
+  "Trà sữa": "badge-tra-sua",
+  "Cơm": "badge-com",
+  "Cơm gà": "badge-com-ga",
+  "Bún": "badge-bun",
+  "Cháo": "badge-chao",
+  "Chè": "badge-che",
+  "Phở": "badge-pho",
+  "Bingsu": "badge-bingsu",
+  "Mì": "badge-mi",
+  "Hủ tiếu": "badge-hu-tieu",
+  "Xíu mại": "badge-xiu-mai",
+  "Bánh mì": "badge-banh-mi"
+};
+```
+
+Nếu gặp category chưa khai báo trong map, `badgeFor()` fallback về
+`badge-vat` (không sập trang, nhưng badge sẽ trùng màu "Ăn vặt" — nên luôn
+khai báo đủ khi thêm category mới).
 
 **Danh sách category/badge tính đến hiện tại:**
 
 | Category | Badge class | Ghi chú |
 |---|---|---|
-| Buffet | `badge-buffet` | có sẵn từ trước |
-| Ăn vặt | `badge-vat` | có sẵn từ trước |
-| Gà Hàn | `badge-ga` | có sẵn từ trước |
-| Cơm gà | `badge-com-ga` | có sẵn từ trước |
-| Bún | `badge-bun` | có sẵn từ trước |
-| Cháo | `badge-chao` | có sẵn từ trước |
-| Chè | `badge-che` | có sẵn từ trước |
-| Bingsu | `badge-bingsu` | có sẵn từ trước |
-| Hủ tiếu | `badge-hu-tieu` | badge mới |
-| Xíu mại | `badge-xiu-mai` | badge mới |
-| Hủ tiếu Mì | `badge-hu-tieu-mi` | badge mới, riêng cho quán bán cả 2 loại |
-| Trà sữa | `badge-tra-sua` | đổi tên từ `badge-tra` |
-| Mì | `badge-mi` | badge mới, tạo sẵn, chưa có quán nào dùng |
+| Buffet | `badge-buffet` | |
+| Ăn vặt | `badge-vat` | cũng là badge fallback mặc định |
+| Gà Hàn | `badge-ga` | |
+| Trà sữa | `badge-tra-sua` | |
+| Cơm | `badge-com` | badge có sẵn từ trước, mới đưa vào `BADGE_MAP` |
+| Cơm gà | `badge-com-ga` | |
+| Bún | `badge-bun` | |
+| Cháo | `badge-chao` | |
+| Chè | `badge-che` | |
+| Phở | `badge-pho` | |
+| Bingsu | `badge-bingsu` | |
+| Mì | `badge-mi` | |
+| Hủ tiếu | `badge-hu-tieu` | |
+| Xíu mại | `badge-xiu-mai` | |
+| Bánh mì | `badge-banh-mi` | badge mới |
+| Chay | `badge-chay` | badge mới, dành cho đồ chay |
+
+**Đã xoá:** `badge-hu-tieu-mi` (dùng riêng cho category gộp "Hủ tiếu Mì"). Quán
+từng dùng badge này ("Hủ Tiếu Mì Gia - A Hòa") giờ khai báo
+`categories: ["Hủ tiếu", "Mì"]` — tự hiện 2 badge riêng (`badge-hu-tieu` +
+`badge-mi`) thay vì 1 badge gộp.
+
+---
+
+## Cách thêm quán mới
+
+Chỉ sửa **duy nhất `data.js`**, thêm 1 object vào mảng `DATA`:
+
+```js
+{
+  name: "Tên quán",
+  categories: ["Loại quán A"],          // hoặc ["Loại A", "Loại B"] nếu bán nhiều loại khác hệ
+  branches: [
+    { label: "", address: "Địa chỉ", hours: "Giờ mở cửa", phone: "" }
+  ],
+  note: "Ghi chú, món nổi bật, giá cả, không gian..."
+}
+```
+
+**2 trường hợp:**
+
+1. **Category đã có sẵn** trong bảng ở trên → chỉ cần gõ đúng tên, badge tự
+   lên màu, không cần sửa gì khác.
+2. **Category hoàn toàn mới** → cần thêm ở 2 chỗ trước khi dùng:
+   - `app.js`: thêm 1 dòng vào `BADGE_MAP`, ví dụ `"Ốc": "badge-oc",`
+   - `style.css`: thêm 1 class màu tương ứng, chọn màu chưa dùng, ví dụ
+     `.badge-oc{ background:#...; color:#...; }`
+
+Không cần đụng `index.html`, `manifest.json` khi thêm quán hoặc category mới.
+
+**Lưu ý khi sửa `data.js`:** nên mở thử `index.html` trên máy trước khi push,
+vì lỗi cú pháp (thiếu dấu phẩy, thiếu ngoặc) sẽ khiến `DATA` không tồn tại,
+kéo theo bảng hiện trống trơn mà không có thông báo lỗi gì cho người xem
+(xem chi tiết ở mục "Nếu `data.js` bị lỗi cú pháp khi push" bên dưới).
 
 ---
 
@@ -137,10 +218,11 @@ chỉ có light mode.
 ### Nếu mở rộng sang loại cửa hàng khác (karaoke, v.v.)
 
 Vì mỗi loại có thông tin khác nhau nhiều, quyết định: **copy riêng từng dự án**
-thay vì dùng chung `app.js`/`style.css`. Lưu ý: nếu copy sau khi đã fix 2 bug ở
-trên, bug đã fix rồi; nhưng nếu sau này sửa lại `initNoteToggles()` độc lập ở bản
-copy, có thể vô tình đưa lại 1 trong 2 bug cũ — nên giữ file tổng hợp này trong
-mỗi bản copy làm cheat-sheet tham khảo.
+thay vì dùng chung `app.js`/`style.css`. Lưu ý: nếu copy sau khi đã fix các bug ở
+trên (line-clamp, nút "Xem thêm", refactor `categories` nhiều badge), các bug/kiến
+trúc đó đã ổn định; nhưng nếu sau này sửa lại `initNoteToggles()` hoặc `BADGE_MAP`
+độc lập ở bản copy, có thể vô tình đưa lại 1 trong các vấn đề cũ — nên giữ file
+tổng hợp này trong mỗi bản copy làm cheat-sheet tham khảo.
 
 ### Repo public — nhận đóng góp từ người khác
 
