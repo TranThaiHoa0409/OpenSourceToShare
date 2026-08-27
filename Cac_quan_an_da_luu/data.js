@@ -180,7 +180,7 @@ const DATA = [
   },
   {
     name: "Bin Bin - Milktea Tea",
-    categories: ["Trà sữa"],
+    categories: ["Trà sữa", "Trà trái cây"],
     branches: [
       { label: "", address: "1 Nguyễn Thị Thập, P. Tân Hưng, Quận 7 (xe đẩy, ngay cạnh quán dê nướng)", hours: "Buổi tối", phone: "0908 557 762" }
     ],

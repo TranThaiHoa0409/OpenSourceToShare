@@ -87,6 +87,7 @@ khai báo đủ khi thêm category mới).
 | Xíu mại | `badge-xiu-mai` | |
 | Bánh mì | `badge-banh-mi` | badge mới |
 | Chay | `badge-chay` | badge mới, dành cho đồ chay |
+| Trà trái cây | `badge-tra-trai-cay` | badge mới |
 
 **Đã xoá:** `badge-hu-tieu-mi` (dùng riêng cho category gộp "Hủ tiếu Mì"). Quán
 từng dùng badge này ("Hủ Tiếu Mì Gia - A Hòa") giờ khai báo
