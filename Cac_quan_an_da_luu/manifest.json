@@ -1,6 +1,6 @@
 {
-  "name": "Sổ Quán Ăn Đã Lưu",
-  "short_name": "Sổ Quán Ăn",
+  "name": "Tổng Hợp Các Quán Ăn Đã Lưu",
+  "short_name": "Sổ Tay Quán",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#E3DAC3",
