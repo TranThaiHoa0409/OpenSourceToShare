@@ -13,7 +13,7 @@ Mỗi quán là 1 object trong mảng `DATA` (`data.js`):
 ```js
 {
   name: "Tên quán",
-  category: "Tên category (hiển thị trên UI, vd: Hủ tiếu, Trà sữa...)",
+  category: "Tên category (hiển thị trên UI)",
   badge: "class-css-badge-tuong-ung",
   branches: [
     { label: "", address: "địa chỉ", hours: "giờ mở cửa", phone: "SĐT (nếu có)" }
