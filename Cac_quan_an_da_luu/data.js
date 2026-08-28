@@ -201,5 +201,37 @@ const DATA = [
       { label: "", address: "727 Lê Hồng Phong, P. Hòa Hưng, Quận 10", hours: "07:00–20:00", phone: "0946 595 573" }
     ],
     note: "Quán chay lâu năm, không gian rộng rãi thoáng mát, thực đơn đa dạng lên đến 70 món. Nổi bật hủ tiếu bò kho chay (35–42k), bún Thái, bánh xèo, bánh mì. Có bán mang về."
-  }
+  },
+  {
+    name: "Hủ Tiếu Ngọc Ánh",
+    categories: ["Hủ tiếu"],
+    branches: [
+      { label: "", address: "25/24 Tôn Thất Tùng, P. Bến Thành, Quận 1", hours: "10:00–15:00 (T2–T6, nghỉ T7-CN)", phone: "" }
+    ],
+    note: "Quán bình dân trong hẻm nhỏ, ngồi lề đường, thanh bình sạch sẽ. Giá phải chăng."
+  },
+  {
+    name: "Lucky Mì Gà Da Giòn",
+    categories: ["Mì"],
+    branches: [
+      { label: "", address: "153/11b Nguyễn Thị Minh Khai, P. Bến Thành, Quận 1", hours: "06:00–21:00 (CN: 07:00–17:00)", phone: "" }
+    ],
+    note: "Quán trong hẻm nhỏ, gửi xe gần đó (~5k). Da gà chiên giòn, nước lèo nóng. Đông dân văn phòng và học sinh vào giờ trưa."
+  },
+  {
+    name: "Cháo Lòng hẻm 153",
+    categories: ["Cháo"],
+    branches: [
+      { label: "", address: "153/6 Nguyễn Thị Minh Khai, P. Bến Thành, Quận 1", hours: "15:30–20:30", phone: "0908 907 609" }
+    ],
+    note: "Quán cháo lòng lâu năm tại trung tâm Quận 1 cũ, chỉ mở buổi chiều-tối. Cháo đậm đà, huyết, dồi, quẩy đều làm ngon; giá 40-50k/tô. Chỗ ngồi trong nhà, thường hay đông khách vào buổi tối."
+  },
+  {
+    name: "Bánh Mì 89",
+    categories: ["Bánh mì", "Bột chiên"],
+    branches: [
+      { label: "", address: "126 Bùi Thị Xuân, P. Bến Thành, Quận 1", hours: "", phone: "" }
+    ],
+    note: "Điểm hẹn quen thuộc của học sinh giờ tan trưa. Bánh mì bò nướng, xíu mại, trứng chiên đầy đặn; còn có bột chiên nóng giòn. Giá mềm, chỉ khoảng 20-25k."
+  },
 ];
