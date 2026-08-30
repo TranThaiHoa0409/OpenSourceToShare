@@ -234,4 +234,12 @@ const DATA = [
     ],
     note: "Điểm hẹn quen thuộc của học sinh giờ tan trưa. Bánh mì bò nướng, xíu mại, trứng chiên đầy đặn; còn có bột chiên nóng giòn. Giá mềm, chỉ khoảng 20-25k."
   },
+  {
+    name: "Trà Sữa Chị Chi",
+    categories: ["Trà sữa", "Trà trái cây"],
+    branches: [
+      { label: "", address: "134/1/2 Bùi Thị Xuân", hours: "Buổi sáng", phone: "" }
+    ],
+    note: "Xe trà sữa bán các loại nước quen thuộc, từ trà sữa đến trà trái cây. Khách chủ yếu là học sinh trường Bùi Thị Xuân ghé thường xuyên."
+  },
 ];
